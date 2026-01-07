@@ -1,16 +1,16 @@
 {
   "configurations": [
     {
-      "name": "Mac",
-      "compileCommands": "${workspaceFolder}/build_x86_64/compile_commands.json",
+      "name": "Android-x86_64",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}/**",
+        "/Users/azyl/MagicLeap/mlsdk/v1.12.0/include"
       ],
       "defines": [],
-      "compilerPath": "/usr/bin/clang",
+      "compilerPath": "/Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++",
       "cStandard": "c17",
-      "cppStandard": "c++14",
-      "intelliSenseMode": "macos-clang-arm64"
+      "cppStandard": "c++17",
+      "intelliSenseMode": "clang-x64"
     }
   ],
   "version": 4

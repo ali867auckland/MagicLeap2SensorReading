@@ -25,7 +25,7 @@ public class DepthNativeConsumer : MonoBehaviour
     [SerializeField] private bool sendFrames = true;
 
     private SensorTcpLink link;
-    private DepthTcpSender depthSender;
+    private MuxTcpSender mux;
 
     private uint frameIndex = 0;
 
@@ -44,13 +44,17 @@ public class DepthNativeConsumer : MonoBehaviour
         Debug.Log("MLDepthUnity_Init: " + ok);
         if (!ok) { enabled = false; return; }
 
+        // Allocate pinned buffer for depth payload
         depthHandle = GCHandle.Alloc(depthBuf, GCHandleType.Pinned);
 
+        // Connect TCP
         link = new SensorTcpLink();
         bool connected = link.Connect(host, port);
         Debug.Log("TCP connected: " + connected);
+        if (!connected) { enabled = false; return; }
 
-        depthSender = new DepthTcpSender(link);
+        // Create mux sender AFTER TCP is connected
+        mux = new MuxTcpSender(link);
     }
 
     private void OnDenied(string perm)
@@ -62,6 +66,7 @@ public class DepthNativeConsumer : MonoBehaviour
     void Update()
     {
         if (!depthHandle.IsAllocated) return;
+        if (mux == null) return;
 
         var ptr = depthHandle.AddrOfPinnedObject();
 
@@ -75,15 +80,18 @@ public class DepthNativeConsumer : MonoBehaviour
                 return;
             }
 
-            if (sendFrames && depthSender != null)
+            if (sendFrames)
             {
-                depthSender.SendDepthFrame(
-                    frameIndex,
-                    info.captureTimeNs,
-                    info.width,
-                    info.height,
-                    depthBuf,
-                    written
+                mux.SendFrame(
+                    SensorType.Depth,
+                    streamId: 0,
+                    frameIndex: frameIndex,
+                    timestampNs: info.captureTimeNs,
+                    width: info.width,
+                    height: info.height,
+                    dtype: 1, // float32
+                    payload: depthBuf,
+                    payloadLen: written
                 );
 
                 frameIndex++;
@@ -97,7 +105,6 @@ public class DepthNativeConsumer : MonoBehaviour
     void OnDestroy()
     {
         try { MLDepthNative.MLDepthUnity_Shutdown(); } catch { }
-
         try { link?.Close(); } catch { }
 
         if (depthHandle.IsAllocated) depthHandle.Free();

@@ -1,6 +1,6 @@
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: \
-  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp \
-  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.h \
+CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: \
+  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp \
+  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdint.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__config \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__config_site \
@@ -21,6 +21,8 @@ CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include/__stddef_nullptr_t.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include/__stddef_max_align_t.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include/__stddef_offsetof.h \
+  /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdbool.h \
+  /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include/stdbool.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/atomic \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__assert \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__verbose_abort \
@@ -889,10 +891,8 @@ CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/pointer_to_binary_function.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/pointer_to_unary_function.h \
   /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/unary_negate.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_depth_camera.h \
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_world_camera.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_api.h \
-  /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdbool.h \
-  /Users/azyl/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include/stdbool.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_coordinate_frame_uid.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_version.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h

@@ -1,6 +1,9 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/mldepth_unity.dir/link.d"
   "CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o"
   "CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o.d"
+  "CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o"
+  "CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o.d"
   "libmldepth_unity.pdb"
   "libmldepth_unity.so"
 )

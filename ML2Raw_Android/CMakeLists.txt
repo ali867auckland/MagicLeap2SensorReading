@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(mldepth_unity)
 
 add_library(mldepth_unity SHARED
+  src/mlworldcam_unity.cpp
   src/mldepth_unity.cpp
 )
 
@@ -18,9 +19,9 @@ find_library(log-lib log)
 find_library(android-lib android)
 
 target_link_libraries(mldepth_unity
+  perception.magicleap
   ${log-lib}
   ${android-lib}
-  perception.magicleap
 )
 
 set_target_properties(mldepth_unity PROPERTIES
