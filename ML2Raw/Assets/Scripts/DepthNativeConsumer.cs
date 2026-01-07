@@ -8,16 +8,25 @@ public class DepthNativeConsumer : MonoBehaviour
 {
     private const string DepthPermission = "com.magicleap.permission.DEPTH_CAMERA";
 
+    // Streams
     private const uint STREAM_LONG  = 1u << 0;
-    private const uint FLAG_DEPTH   = 1u << 0;
-    private const uint FPS_5        = 1;
+    private const uint STREAM_SHORT = 1u << 1;
 
-    private byte[] depthBuf = new byte[8 * 1024 * 1024];
-    private GCHandle depthHandle;
-    private IntPtr depthPtr = IntPtr.Zero;
+    // Flags
+    private const uint FLAG_DEPTH        = 1u << 0; // DepthImage
+    private const uint FLAG_CONF         = 1u << 1; // Confidence
+    private const uint FLAG_DFLAGS       = 1u << 2; // DepthFlags
+    private const uint FLAG_AMBIENT_RAW  = 1u << 3; // AmbientRawDepthImage
+    private const uint FLAG_RAW          = 1u << 4; // RawDepthImage
+
+    // FPS
+    private const uint FPS_25 = 2; // MLDepthCameraFrameRate_25FPS
+
+    private byte[] buf = new byte[8 * 1024 * 1024];
+    private GCHandle bufHandle;
+    private IntPtr bufPtr = IntPtr.Zero;
 
     private bool started = false;
-    private bool permissionGranted = false;
 
     private string outPath;
     private FileStream fs;
@@ -27,49 +36,38 @@ public class DepthNativeConsumer : MonoBehaviour
 
     void Start()
     {
-        // Pin buffer once (so native can write into it)
-        depthHandle = GCHandle.Alloc(depthBuf, GCHandleType.Pinned);
-        depthPtr = depthHandle.AddrOfPinnedObject();
+        bufHandle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+        bufPtr = bufHandle.AddrOfPinnedObject();
 
-        Permissions.RequestPermission(DepthPermission, OnPermissionResult);
+        Permissions.RequestPermission(DepthPermission, OnGranted);
     }
 
-    private void OnPermissionResult(string permission, bool granted)
+    private void OnGranted(string perm)
     {
-        if (permission != DepthPermission) return;
-
-        permissionGranted = granted;
-        if (!granted)
-        {
-            Debug.LogError("Depth permission denied.");
-            return;
-        }
-
-        if (started) return; // guard multiple callbacks
+        if (perm != DepthPermission) return;
+        if (started) return;
         started = true;
 
-        StartDepth();
-    }
-
-    private void StartDepth()
-    {
         outPath = Path.Combine(Application.persistentDataPath,
-            $"depth_{DateTime.Now:yyyyMMdd_HHmmss}.bin");
+            $"depth_raw_{DateTime.Now:yyyyMMdd_HHmmss}.bin");
 
         fs = new FileStream(outPath, FileMode.Create, FileAccess.Write, FileShare.Read);
         bw = new BinaryWriter(fs);
 
-        // file header
-        bw.Write(new byte[] { (byte)'D',(byte)'E',(byte)'P',(byte)'T',(byte)'H',(byte)'B',(byte)'I',(byte)'N' });
+        bw.Write(new byte[] { (byte)'D',(byte)'E',(byte)'P',(byte)'T',(byte)'H',(byte)'R',(byte)'A',(byte)'W' });
         bw.Write(1); // version
 
-        bool ok = MLDepthNative.MLDepthUnity_Init(STREAM_LONG, FLAG_DEPTH, FPS_5);
-        Debug.Log("MLDepthUnity_Init: " + ok);
+        uint streams = STREAM_LONG; // switch to STREAM_SHORT if you want close-range optimized
+        uint flags = FLAG_DEPTH | FLAG_CONF | FLAG_DFLAGS | FLAG_RAW | FLAG_AMBIENT_RAW;
+
+        bool ok = MLDepthNative.MLDepthUnity_Init(streams, flags, FPS_25);
+        Debug.Log($"MLDepthUnity_Init(raw): {ok} streams={streams} flags={flags} fps=25");
 
         if (!ok)
         {
             Debug.LogError("MLDepthUnity_Init failed.");
             CleanupFile();
+            enabled = false;
             return;
         }
 
@@ -78,43 +76,90 @@ public class DepthNativeConsumer : MonoBehaviour
 
     void Update()
     {
-        if (!permissionGranted || !started || bw == null) return;
+        if (!started || bw == null) return;
 
-        MLDepthNative.DepthFrameInfo info;
-        int bytesWritten;
+        // Always anchor a frame on processed depth (so we have a consistent “frame header”)
+        if (!WriteProcessedDepthFrameHeaderAndBlock())
+            return;
 
-        bool got = MLDepthNative.MLDepthUnity_TryGetLatestDepth(
-            0,
-            out info,
-            depthPtr,                 // ✅ IntPtr, not byte[]
-            depthBuf.Length,
-            out bytesWritten
-        );
-
-        if (!got || bytesWritten <= 0) return;
-
-        frameIndex++;
-
-        if (Time.frameCount % 60 == 0)
-        {
-            Debug.Log($"Depth frame #{frameIndex} bytes={bytesWritten} w={info.width} h={info.height} stride={info.strideBytes} t={info.captureTimeNs}");
-        }
-
-        // record per frame
-        bw.Write(frameIndex);
-        bw.Write(info.captureTimeNs);
-        bw.Write(info.width);
-        bw.Write(info.height);
-        bw.Write(info.strideBytes);
-        bw.Write(info.bytesPerPixel);
-        bw.Write(bytesWritten);
-        bw.Write(depthBuf, 0, bytesWritten);
+        WriteOptionalBlock(2, MLDepthNative.MLDepthUnity_TryGetLatestConfidence);
+        WriteOptionalBlock(3, MLDepthNative.MLDepthUnity_TryGetLatestDepthFlags);
+        WriteOptionalBlock(4, MLDepthNative.MLDepthUnity_TryGetLatestRawDepth);
+        WriteOptionalBlock(5, MLDepthNative.MLDepthUnity_TryGetLatestAmbientRawDepth);
 
         if ((frameIndex % 30) == 0)
         {
             bw.Flush();
             fs.Flush();
         }
+    }
+
+    private bool WriteProcessedDepthFrameHeaderAndBlock()
+    {
+        MLDepthNative.DepthFrameInfo info;
+        int bytesWritten;
+
+        bool got = MLDepthNative.MLDepthUnity_TryGetLatestDepth(
+            0,
+            out info,
+            bufPtr,
+            buf.Length,
+            out bytesWritten
+        );
+
+        if (!got || bytesWritten <= 0) return false;
+
+        frameIndex++;
+
+        if (Time.frameCount % 60 == 0)
+        {
+            Debug.Log($"Depth OK frame={frameIndex} bytes={bytesWritten} w={info.width} h={info.height} stride={info.strideBytes} bpp={info.bytesPerPixel} t={info.captureTimeNs}");
+        }
+
+        // Frame header
+        bw.Write(frameIndex);
+        bw.Write(info.captureTimeNs);
+
+        // Block 1 = processed depth (with its own info so you can decode later)
+        bw.Write((byte)1);
+        bw.Write(info.width);
+        bw.Write(info.height);
+        bw.Write(info.strideBytes);
+        bw.Write(info.bytesPerPixel);
+        bw.Write(bytesWritten);
+        bw.Write(buf, 0, bytesWritten);
+
+        return true;
+    }
+
+    private delegate bool Getter(out MLDepthNative.DepthFrameInfo info, IntPtr outBytes, int capacityBytes, out int bytesWritten);
+
+    private void WriteOptionalBlock(byte blockType, Getter getter)
+    {
+        MLDepthNative.DepthFrameInfo info;
+        int bytesWritten;
+
+        bool got = getter(out info, bufPtr, buf.Length, out bytesWritten);
+
+        bw.Write(blockType);
+
+        if (!got || bytesWritten <= 0)
+        {
+            // mark empty
+            bw.Write(0); // width
+            bw.Write(0); // height
+            bw.Write(0); // stride
+            bw.Write(0); // bpp
+            bw.Write(0); // nbytes
+            return;
+        }
+
+        bw.Write(info.width);
+        bw.Write(info.height);
+        bw.Write(info.strideBytes);
+        bw.Write(info.bytesPerPixel);
+        bw.Write(bytesWritten);
+        bw.Write(buf, 0, bytesWritten);
     }
 
     void OnDisable() => Shutdown();
@@ -130,9 +175,8 @@ public class DepthNativeConsumer : MonoBehaviour
 
         CleanupFile();
 
-        if (depthHandle.IsAllocated)
-            depthHandle.Free();
-        depthPtr = IntPtr.Zero;
+        if (bufHandle.IsAllocated) bufHandle.Free();
+        bufPtr = IntPtr.Zero;
     }
 
     private void CleanupFile()

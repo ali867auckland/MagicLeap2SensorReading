@@ -49,6 +49,24 @@ public static class MLDepthNative
         out int bytesWritten
     );
 
+    // ✅ Raw depth
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool MLDepthUnity_TryGetLatestRawDepth(
+        out DepthFrameInfo info,
+        IntPtr outBytes,
+        int capacityBytes,
+        out int bytesWritten
+    );
+
+    // ✅ Ambient raw depth
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool MLDepthUnity_TryGetLatestAmbientRawDepth(
+        out DepthFrameInfo info,
+        IntPtr outBytes,
+        int capacityBytes,
+        out int bytesWritten
+    );
+
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     public static extern void MLDepthUnity_Shutdown();
 }
