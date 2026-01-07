@@ -1,0 +1,23 @@
+using System; 
+using MagicLeap.Android; 
+using UnityEngine; 
+using System.Runtime.InteropServices; 
+public class DepthNativeConsumer : MonoBehaviour { 
+    private const string DepthPermission = "com.magicleap.permission.DEPTH_CAMERA"; 
+    // These enums are from native ML headers; we just hardcode values here. 
+    MLDepthCameraStream_LongRange = 1<<0, 
+    // ShortRange=1<<1 private const uint STREAM_LONG = 1u << 0; private const uint STREAM_SHORT = 1u << 1; 
+    // MLDepthCameraFlags_DepthImage = 1<<0, Confidence=1<<1, 
+    // DepthFlags=1<<2 private const uint FLAG_DEPTH = 1u << 0; 
+    // private const uint FLAG_CONF = 1u << 1; private const uint FLAG_DFLAGS= 1u << 2; // MLDepthCameraFrameRate_5FPS = 1 (per your pasted enum table) private const uint FPS_5 = 1; private byte[] depthBuf = new byte[4 * 640 * 480]; // will resize once we know actual size private GCHandle depthHandle; void Start() { Permissions.RequestPermission(DepthPermission, OnGranted, OnDenied, OnDenied); } private void OnGranted(string perm) { uint streams = STREAM_LONG; // pick one first (native API may only support single stream) uint flags = FLAG_DEPTH | FLAG_CONF; // request what you want uint fps = FPS_5; bool ok = MLDepthNative.MLDepthUnity_Init(streams, flags, fps); Debug.Log("MLDepthUnity_Init: " + ok); if (!ok) enabled = false; depthHandle = GCHandle.Alloc(depthBuf, GCHandleType.Pinned); } private void OnDenied(string perm) { Debug.LogError("Depth permission denied: " + perm); enabled = false; } void Update() { if (!depthHandle.IsAllocated) return; var ptr = depthHandle.AddrOfPinnedObject(); if (MLDepthNative.MLDepthUnity_TryGetLatestDepth(0, out var info, ptr, depthBuf.Length, out int written)) { // If buffer too small, grow and repin next frame if (written > depthBuf.Length) { depthHandle.Free(); depthBuf = new byte[written]; depthHandle = GCHandle.Alloc(depthBuf, GCHandleType.Pinned); return; } // Depth is float32 meters: interpret first pixel for sanity float firstDepth = BitConverter.ToSingle(depthBuf, 0); Debug.Log($"Depth frame {info.width}x{info.height} stride={info.strideBytes} time={info.captureTimeNs} firstDepth={firstDepth}"); } } void OnDestroy() { try { MLDepthNative.MLDepthUnity_Shutdown(); } catch { } if (depthHandle.IsAllocated) depthHandle.Free(); } }
+
+
+    bool ok = MLDepthNative.MLDepthUnity_Init(streams, flags, fps);
+Debug.Log("MLDepthUnity_Init: " + ok);
+if (!ok) { enabled = false; return; }
+
+depthHandle = GCHandle.Alloc(depthBuf, GCHandleType.Pinned);
+
+private byte[] depthBuf = new byte[4 * 1024 * 1024];
+uint flags = FLAG_DEPTH;   // first test
+
