@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(mldepth_unity)
 
 add_library(mldepth_unity SHARED
+  src/mlperception_service.cpp
   src/mlworldcam_unity.cpp
   src/mldepth_unity.cpp
 )

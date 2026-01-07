@@ -1,4 +1,5 @@
 #include "mlworldcam_unity.h"
+#include "mlperception_service.h"
 
 #include <atomic>
 #include <mutex>
@@ -32,9 +33,6 @@ static void CaptureLoop() {
 
     if (r == MLResult_Timeout) continue;
     if (r != MLResult_Ok || data == nullptr) continue;
-
-    // data->frame_count frames in data->frames :contentReference[oaicite:6]{index=6}
-    // Each frame has one frame_buffer (not multi-plane) :contentReference[oaicite:7]{index=7}
 
     MLWorldCameraFrame* frames = data->frames;
     uint8_t n = data->frame_count;
@@ -75,16 +73,22 @@ static void CaptureLoop() {
 bool MLWorldCamUnity_Init(uint32_t identifiersMask) {
   if (g_wc_running.load()) return true;
 
+  // ✅ Universal Perception: start it for any sensor that may depend on it
+  if (!MLPerceptionService_Startup()) {
+    return false;
+  }
+
   MLWorldCameraSettings settings;
   MLWorldCameraSettingsInit(&settings);
 
-  // In this MLSDK header the settings struct is opaque here; the API exists, but
-  // some versions allow selecting cameras, others don’t. We'll just connect.
-  // If your MLWorldCameraSettings has a "cameras"/"camera_id" field, you can set it.
   (void)identifiersMask;
 
   MLResult r = MLWorldCameraConnect(&settings, &g_wc_handle);
-  if (r != MLResult_Ok) return false;
+  if (r != MLResult_Ok) {
+    // ✅ Balance Perception if connect fails
+    MLPerceptionService_Shutdown();
+    return false;
+  }
 
   g_wc_running.store(true);
   g_wc_thread = std::thread(CaptureLoop);
@@ -167,7 +171,12 @@ void MLWorldCamUnity_Shutdown() {
     g_wc_handle = ML_INVALID_HANDLE;
   }
 
-  std::lock_guard<std::mutex> lk(g_wc_mtx);
-  g_wc_latest.clear();
-  g_wc_hasFrame.store(false);
+  {
+    std::lock_guard<std::mutex> lk(g_wc_mtx);
+    g_wc_latest.clear();
+    g_wc_hasFrame.store(false);
+  }
+
+  // ✅ Universal Perception: release our ref-count
+  MLPerceptionService_Shutdown();
 }

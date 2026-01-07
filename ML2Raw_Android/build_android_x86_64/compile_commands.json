@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64",
+  "command": "/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dmldepth_unity_EXPORTS -I/Users/azyl/MagicLeap/mlsdk/v1.12.0/include -I/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.cpp",
+  "file": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.cpp",
+  "output": "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o"
+},
+{
+  "directory": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64",
+  "command": "/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dmldepth_unity_EXPORTS -I/Users/azyl/MagicLeap/mlsdk/v1.12.0/include -I/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp",
+  "file": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp",
+  "output": "CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o"
+},
+{
+  "directory": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64",
+  "command": "/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dmldepth_unity_EXPORTS -I/Users/azyl/MagicLeap/mlsdk/v1.12.0/include -I/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC -o CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp",
+  "file": "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp",
+  "output": "CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o"
+}
+]

@@ -1,0 +1,3 @@
+/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles/mldepth_unity.dir
+/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles/edit_cache.dir
+/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles/rebuild_cache.dir

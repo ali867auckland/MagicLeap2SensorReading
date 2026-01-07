@@ -1,4 +1,5 @@
 #include "mldepth_unity.h"
+#include "mlperception_service.h"
 
 #include <atomic>
 #include <mutex>
@@ -90,9 +91,13 @@ static void CaptureLoop() {
   }
 }
 
-
 bool MLDepthUnity_Init(uint32_t streamMask, uint32_t flagsMask, uint32_t frameRateEnum) {
   if (g_running.load()) return true;
+
+  // ✅ Universal Perception: start it for any sensor that may depend on it
+  if (!MLPerceptionService_Startup()) {
+    return false;
+  }
 
   g_streamMask = streamMask;
   g_flagsMask  = flagsMask;
@@ -114,6 +119,9 @@ bool MLDepthUnity_Init(uint32_t streamMask, uint32_t flagsMask, uint32_t frameRa
   MLResult r = MLDepthCameraConnect(&settings, &g_handle);
   if (r != MLResult_Ok || g_handle == ML_INVALID_HANDLE) {
     g_handle = ML_INVALID_HANDLE;
+
+    // ✅ Balance the Perception ref-count if init fails
+    MLPerceptionService_Shutdown();
     return false;
   }
 
@@ -121,7 +129,6 @@ bool MLDepthUnity_Init(uint32_t streamMask, uint32_t flagsMask, uint32_t frameRa
   g_thread = std::thread(CaptureLoop);
   return true;
 }
-
 
 static bool CopyOut(const std::vector<uint8_t>& src, DepthFrameInfo* outInfo,
                     uint8_t* outBytes, int32_t cap, int32_t* written) {
@@ -170,8 +177,13 @@ void MLDepthUnity_Shutdown() {
     g_handle = ML_INVALID_HANDLE;
   }
 
-  std::lock_guard<std::mutex> guard(g_lock);
-  g_depthBytes.clear();
-  g_confBytes.clear();
-  g_flagsBytes.clear();
+  {
+    std::lock_guard<std::mutex> guard(g_lock);
+    g_depthBytes.clear();
+    g_confBytes.clear();
+    g_flagsBytes.clear();
+  }
+
+  // ✅ Universal Perception: release our ref-count
+  MLPerceptionService_Shutdown();
 }

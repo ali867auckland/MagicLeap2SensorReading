@@ -18,4 +18,12 @@
       <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
     </activity>
   </application>
+  <uses-permission android:name="com.magicleap.permission.PUPIL_SIZE" />
+  <uses-permission android:name="com.magicleap.permission.VOICE_INPUT" />
+  <uses-permission android:name="com.magicleap.permission.SPATIAL_MAPPING" />
+  <uses-permission android:name="com.magicleap.permission.SPACE_IMPORT_EXPORT" />
+  <uses-permission android:name="com.magicleap.permission.SPATIAL_ANCHOR" />
+  <uses-permission android:name="com.magicleap.permission.HAND_TRACKING" />
+  <uses-permission android:name="com.magicleap.permission.WEBVIEW" />
+  <uses-permission android:name="com.magicleap.permission.MARKER_TRACKING" />
 </manifest>
