@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using UnityEngine;
 
 public static class MLDepthNative
 {
@@ -20,6 +19,22 @@ public static class MLDepthNative
         public int bytesPerPixel;
         public int format;
     }
+
+    // ---------------- Perception service (native) ----------------
+
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool MLPerceptionService_Startup();
+
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool MLPerceptionService_StartupAndWait(uint timeoutMs);
+
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern void MLPerceptionService_Shutdown();
+
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    public static extern bool MLPerceptionService_IsStarted();
+
+    // ---------------- Depth native plugin ----------------
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool MLDepthUnity_Init(uint streamMask, uint flagsMask, uint frameRateEnum);
@@ -49,7 +64,6 @@ public static class MLDepthNative
         out int bytesWritten
     );
 
-    // ✅ Raw depth
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool MLDepthUnity_TryGetLatestRawDepth(
         out DepthFrameInfo info,
@@ -58,7 +72,6 @@ public static class MLDepthNative
         out int bytesWritten
     );
 
-    // ✅ Ambient raw depth
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     public static extern bool MLDepthUnity_TryGetLatestAmbientRawDepth(
         out DepthFrameInfo info,

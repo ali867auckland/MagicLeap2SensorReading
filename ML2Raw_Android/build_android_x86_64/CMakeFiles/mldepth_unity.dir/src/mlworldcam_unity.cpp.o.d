@@ -28,7 +28,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stddef_offsetof.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdbool.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdbool.h \
-  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/atomic \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/aliases.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic.h \
@@ -702,8 +701,11 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/chrono \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/file_clock.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/forward_list \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_world_camera.h \
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_perception.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_api.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_coordinate_frame_uid.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_version.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_snapshot.h \
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h \
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_world_camera.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h

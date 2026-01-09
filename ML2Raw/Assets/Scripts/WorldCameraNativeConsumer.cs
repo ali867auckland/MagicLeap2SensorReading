@@ -7,42 +7,48 @@ public class WorldCameraNativeConsumer : MonoBehaviour
 {
     private const string CameraPermission = "android.permission.CAMERA";
 
-    [Header("TCP")]
-    [SerializeField] private string host = "172.24.15.112";
-    [SerializeField] private int port = 5001;
-    [SerializeField] private bool sendFrames = true;
+    // MLWorldCameraIdentifier bitmask: Left=1, Right=2, Center=4
+    [Header("WorldCam Config")]
+    [SerializeField] private uint identifiersMask = 4; // Center
 
-    // bitmask: Left=1, Right=2, Center=4 (from MLWorldCameraIdentifier in header)
-    [SerializeField] private uint identifiersMask = 4; // Center by default
-
-    private SensorTcpLink link;
-    private MuxTcpSender mux;
-
-    private byte[] buf = new byte[4 * 1024 * 1024];
+    private byte[] buf = new byte[8 * 1024 * 1024];
     private GCHandle handle;
+    private IntPtr ptr;
 
+    private bool started = false;
     private uint frameIndex = 0;
 
     void Start()
     {
+        handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+        ptr = handle.AddrOfPinnedObject();
+
         Permissions.RequestPermission(CameraPermission, OnGranted, OnDenied, OnDenied);
     }
 
     private void OnGranted(string perm)
     {
+        if (started) return;
+
+        if (!PerceptionManager.IsReady)
+        {
+            Debug.LogError("[WORLD CAM] PerceptionManager not ready. Make sure PerceptionManager exists in the startup scene.");
+            enabled = false;
+            return;
+        }
+
+        started = true;
+
         bool ok = MLWorldCamNative.MLWorldCamUnity_Init(identifiersMask);
         Debug.Log("MLWorldCamUnity_Init: " + ok);
-        if (!ok) { enabled = false; return; }
-
-        handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
-
-        link = new SensorTcpLink();
-        bool connected = link.Connect(host, port);
-        Debug.Log("TCP connected: " + connected);
-        if (!connected) { enabled = false; return; }
-
-        mux = new MuxTcpSender(link);
+        if (!ok)
+        {
+            Debug.LogError("[WORLD CAM] Init failed.");
+            enabled = false;
+            return;
+        }
     }
+
 
     private void OnDenied(string perm)
     {
@@ -52,54 +58,55 @@ public class WorldCameraNativeConsumer : MonoBehaviour
 
     void Update()
     {
-        if (!handle.IsAllocated || mux == null) return;
+        if (!started) return;
 
-        var ptr = handle.AddrOfPinnedObject();
+        bool ok = MLWorldCamNative.MLWorldCamUnity_TryGetLatest(
+            0,
+            out var info,
+            ptr,
+            buf.Length,
+            out int written);
 
-        if (MLWorldCamNative.MLWorldCamUnity_TryGetLatest(
-                0,
-                out var info,
-                ptr,
-                buf.Length,
-                out int written))
+        // IMPORTANT: native returns false when capacity is too small,
+        // but still tells us the required size in `written`.
+        if (!ok)
         {
-            // If buffer too small, native returns false but sets bytesWritten = required
             if (written > buf.Length)
             {
-                handle.Free();
-                buf = new byte[written];
-                handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
-                return;
+                ResizeBuffer(written);
             }
-
-            if (sendFrames)
-            {
-                // dtype: we’ll store bytesPerPixel so laptop knows how to interpret
-                mux.SendFrame(
-                    SensorType.WorldCamera,
-                    streamId: (ushort)Mathf.Max(0, info.camId),  // 0/1/2
-                    frameIndex: frameIndex,
-                    timestampNs: info.timestampNs,
-                    width: info.width,
-                    height: info.height,
-                    dtype: (uint)info.bytesPerPixel,
-                    payload: buf,
-                    payloadLen: written
-                );
-                frameIndex++;
-            }
-
-            if (frameIndex % 30 == 0)
-            {
-                Debug.Log($"WorldCam cam={info.camId} {info.width}x{info.height} bpp={info.bytesPerPixel} ts={info.timestampNs} bytes={written}");
-            }
+            return;
         }
+
+        if (written <= 0) return;
+
+        frameIndex++;
+
+        if (frameIndex % 30 == 0)
+        {
+            Debug.Log($"[WORLD CAM] cam={info.camId} {info.width}x{info.height} stride={info.strideBytes} bpp={info.bytesPerPixel} type={info.frameType} ts={info.timestampNs} bytes={written}");
+        }
+
+        // buf now contains the frame bytes in the first `written` bytes.
     }
+
+    private void ResizeBuffer(int neededBytes)
+    {
+        // Add a little headroom to avoid resizing repeatedly
+        int newSize = neededBytes + (neededBytes / 8);
+
+        if (handle.IsAllocated) handle.Free();
+        buf = new byte[newSize];
+        handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
+        ptr = handle.AddrOfPinnedObject();
+
+        Debug.Log($"[WORLD CAM] Resized buffer to {newSize} bytes (needed {neededBytes})");
+    }
+
 
     void OnDestroy()
     {
         try { MLWorldCamNative.MLWorldCamUnity_Shutdown(); } catch { }
-        try { link?.Close(); } catch { }
 
         if (handle.IsAllocated) handle.Free();
     }
