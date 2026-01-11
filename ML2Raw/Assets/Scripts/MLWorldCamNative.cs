@@ -13,19 +13,20 @@ public static class MLWorldCamNative
     public struct WorldCamFrameInfo
     {
         public int camId;
-        public long frameNumber;
-        public long timestampNs;
         public int width;
         public int height;
         public int strideBytes;
         public int bytesPerPixel;
         public int frameType;
+        public long timestampNs;
     }
 
     [DllImport(DLL, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLWorldCamUnity_Init(uint identifiersMask);
 
     [DllImport(DLL, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLWorldCamUnity_TryGetLatest(
         uint timeoutMs,
         out WorldCamFrameInfo outInfo,

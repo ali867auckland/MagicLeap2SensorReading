@@ -73,6 +73,7 @@ public class DepthNativeConsumer : MonoBehaviour
 
     private void OnGranted(string perm)
     {
+        Debug.Log("[DEPTH] Perception ready? " + PerceptionManager.IsReady);
         if (perm != DepthPermission) return;
         if (started) return;
         started = true;

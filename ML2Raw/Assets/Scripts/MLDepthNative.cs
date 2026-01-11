@@ -23,23 +23,29 @@ public static class MLDepthNative
     // ---------------- Perception service (native) ----------------
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLPerceptionService_Startup();
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLPerceptionService_StartupAndWait(uint timeoutMs);
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     public static extern void MLPerceptionService_Shutdown();
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLPerceptionService_IsStarted();
 
     // ---------------- Depth native plugin ----------------
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
+
     public static extern bool MLDepthUnity_Init(uint streamMask, uint flagsMask, uint frameRateEnum);
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLDepthUnity_TryGetLatestDepth(
         uint timeoutMs,
         out DepthFrameInfo info,
@@ -49,6 +55,7 @@ public static class MLDepthNative
     );
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLDepthUnity_TryGetLatestConfidence(
         out DepthFrameInfo info,
         IntPtr outBytes,
@@ -57,6 +64,7 @@ public static class MLDepthNative
     );
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLDepthUnity_TryGetLatestDepthFlags(
         out DepthFrameInfo info,
         IntPtr outBytes,
@@ -65,6 +73,7 @@ public static class MLDepthNative
     );
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLDepthUnity_TryGetLatestRawDepth(
         out DepthFrameInfo info,
         IntPtr outBytes,
@@ -73,6 +82,7 @@ public static class MLDepthNative
     );
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLDepthUnity_TryGetLatestAmbientRawDepth(
         out DepthFrameInfo info,
         IntPtr outBytes,
