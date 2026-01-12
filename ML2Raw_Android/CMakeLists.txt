@@ -3,8 +3,10 @@ project(mldepth_unity)
 
 add_library(mldepth_unity SHARED
   src/mlperception_service.cpp
-  src/mlworldcam_unity.cpp
-  src/mldepth_unity.cpp
+  src/mlheadtracking.cpp
+  src/mlcvcamera.cpp
+  src/mlworldcam.cpp
+  src/mldepth.cpp
 )
 
 target_include_directories(mldepth_unity PRIVATE

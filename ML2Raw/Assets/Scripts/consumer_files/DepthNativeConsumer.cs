@@ -109,7 +109,7 @@ public class DepthNativeConsumer : MonoBehaviour
         }
 
         // Request everything you want (you can reduce if you hit init failure)
-        uint desiredFlags = FLAG_DEPTH | FLAG_CONF | FLAG_DFLAGS | FLAG_RAW | FLAG_AMBIENT_RAW;
+        uint desiredFlags = FLAG_DEPTH | FLAG_CONF | FLAG_RAW | FLAG_DFLAGS | FLAG_AMBIENT_RAW;
 
         // Pick safe fps for the chosen stream
         uint fpsEnum = PickFpsEnum(streams);

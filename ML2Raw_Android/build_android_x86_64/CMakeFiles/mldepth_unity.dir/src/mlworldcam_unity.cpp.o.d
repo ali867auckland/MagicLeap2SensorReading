@@ -597,6 +597,7 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_version.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h \
   /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/mutex \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__condition_variable/condition_variable.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/mutex.h \

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
   <!-- Android dangerous permissions (need runtime request) -->
-  <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.RECORD_AUDIO" />
-  <!-- Magic Leap permissions (pick what you actually use) -->
+  <uses-permission android:name="com.magicleap.permission.CAMERA_CAPTURE_CVIP" />
+  <uses-permission android:name="com.magicleap.permission.COMPUTER_VISION" />
+  <uses-permission android:name="com.magicleap.permission.CAMERA_STREAMING" />
+  <uses-feature android:name="android.hardware.camera" android:required="false" />
   <uses-permission android:name="com.magicleap.permission.DEPTH_CAMERA" />
   <uses-permission android:name="com.magicleap.permission.EYE_TRACKING" />
   <uses-permission android:name="com.magicleap.permission.EYE_CAMERA" />
@@ -26,4 +28,5 @@
   <uses-permission android:name="com.magicleap.permission.HAND_TRACKING" />
   <uses-permission android:name="com.magicleap.permission.WEBVIEW" />
   <uses-permission android:name="com.magicleap.permission.MARKER_TRACKING" />
+  <uses-permission android:name="android.permission.CAMERA" />
 </manifest>

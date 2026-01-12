@@ -517,12 +517,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158455309}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d916dfb6b7d444e82a8aeaa67fbc2a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldCameraNativeConsumer
-  identifiersMask: 4
+  identifiersMask: 7
+  debugMode: 1
 --- !u!1 &1945564138
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +534,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1945564139}
   - component: {fileID: 1945564140}
-  - component: {fileID: 1945564141}
   m_Layer: 0
   m_Name: DepthConsumer
   m_TagString: Untagged
@@ -571,19 +571,6 @@ MonoBehaviour:
   useShortRange: 1
   debugMode: 1
   rejectBothStreams: 1
---- !u!114 &1945564141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945564138}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d916dfb6b7d444e82a8aeaa67fbc2a98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WorldCameraNativeConsumer
-  identifiersMask: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

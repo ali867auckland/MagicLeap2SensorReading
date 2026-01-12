@@ -6,5 +6,5 @@ CXX_DEFINES = -Dmldepth_unity_EXPORTS
 
 CXX_INCLUDES = -I/Users/azyl/MagicLeap/mlsdk/v1.12.0/include -I/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src
 
-CXX_FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O3 -DNDEBUG  -std=gnu++17 -fPIC
+CXX_FLAGS = -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -std=gnu++17 -fPIC
 
