@@ -129,29 +129,77 @@ mldepth_unity/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/build
 .PHONY : mldepth_unity/fast
 
-src/mldepth_unity.o: src/mldepth_unity.cpp.o
-.PHONY : src/mldepth_unity.o
+src/mlcvcamera.o: src/mlcvcamera.cpp.o
+.PHONY : src/mlcvcamera.o
 
 # target to build an object file
-src/mldepth_unity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o
-.PHONY : src/mldepth_unity.cpp.o
+src/mlcvcamera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o
+.PHONY : src/mlcvcamera.cpp.o
 
-src/mldepth_unity.i: src/mldepth_unity.cpp.i
-.PHONY : src/mldepth_unity.i
+src/mlcvcamera.i: src/mlcvcamera.cpp.i
+.PHONY : src/mlcvcamera.i
 
 # target to preprocess a source file
-src/mldepth_unity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.i
-.PHONY : src/mldepth_unity.cpp.i
+src/mlcvcamera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.i
+.PHONY : src/mlcvcamera.cpp.i
 
-src/mldepth_unity.s: src/mldepth_unity.cpp.s
-.PHONY : src/mldepth_unity.s
+src/mlcvcamera.s: src/mlcvcamera.cpp.s
+.PHONY : src/mlcvcamera.s
 
 # target to generate assembly for a file
-src/mldepth_unity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.s
-.PHONY : src/mldepth_unity.cpp.s
+src/mlcvcamera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.s
+.PHONY : src/mlcvcamera.cpp.s
+
+src/mldepth.o: src/mldepth.cpp.o
+.PHONY : src/mldepth.o
+
+# target to build an object file
+src/mldepth.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o
+.PHONY : src/mldepth.cpp.o
+
+src/mldepth.i: src/mldepth.cpp.i
+.PHONY : src/mldepth.i
+
+# target to preprocess a source file
+src/mldepth.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.i
+.PHONY : src/mldepth.cpp.i
+
+src/mldepth.s: src/mldepth.cpp.s
+.PHONY : src/mldepth.s
+
+# target to generate assembly for a file
+src/mldepth.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s
+.PHONY : src/mldepth.cpp.s
+
+src/mlheadtracking.o: src/mlheadtracking.cpp.o
+.PHONY : src/mlheadtracking.o
+
+# target to build an object file
+src/mlheadtracking.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o
+.PHONY : src/mlheadtracking.cpp.o
+
+src/mlheadtracking.i: src/mlheadtracking.cpp.i
+.PHONY : src/mlheadtracking.i
+
+# target to preprocess a source file
+src/mlheadtracking.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.i
+.PHONY : src/mlheadtracking.cpp.i
+
+src/mlheadtracking.s: src/mlheadtracking.cpp.s
+.PHONY : src/mlheadtracking.s
+
+# target to generate assembly for a file
+src/mlheadtracking.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.s
+.PHONY : src/mlheadtracking.cpp.s
 
 src/mlperception_service.o: src/mlperception_service.cpp.o
 .PHONY : src/mlperception_service.o
@@ -177,29 +225,53 @@ src/mlperception_service.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.s
 .PHONY : src/mlperception_service.cpp.s
 
-src/mlworldcam_unity.o: src/mlworldcam_unity.cpp.o
-.PHONY : src/mlworldcam_unity.o
+src/mlrgbcamera.o: src/mlrgbcamera.cpp.o
+.PHONY : src/mlrgbcamera.o
 
 # target to build an object file
-src/mlworldcam_unity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o
-.PHONY : src/mlworldcam_unity.cpp.o
+src/mlrgbcamera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o
+.PHONY : src/mlrgbcamera.cpp.o
 
-src/mlworldcam_unity.i: src/mlworldcam_unity.cpp.i
-.PHONY : src/mlworldcam_unity.i
+src/mlrgbcamera.i: src/mlrgbcamera.cpp.i
+.PHONY : src/mlrgbcamera.i
 
 # target to preprocess a source file
-src/mlworldcam_unity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.i
-.PHONY : src/mlworldcam_unity.cpp.i
+src/mlrgbcamera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.i
+.PHONY : src/mlrgbcamera.cpp.i
 
-src/mlworldcam_unity.s: src/mlworldcam_unity.cpp.s
-.PHONY : src/mlworldcam_unity.s
+src/mlrgbcamera.s: src/mlrgbcamera.cpp.s
+.PHONY : src/mlrgbcamera.s
 
 # target to generate assembly for a file
-src/mlworldcam_unity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.s
-.PHONY : src/mlworldcam_unity.cpp.s
+src/mlrgbcamera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.s
+.PHONY : src/mlrgbcamera.cpp.s
+
+src/mlworldcam.o: src/mlworldcam.cpp.o
+.PHONY : src/mlworldcam.o
+
+# target to build an object file
+src/mlworldcam.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o
+.PHONY : src/mlworldcam.cpp.o
+
+src/mlworldcam.i: src/mlworldcam.cpp.i
+.PHONY : src/mlworldcam.i
+
+# target to preprocess a source file
+src/mlworldcam.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.i
+.PHONY : src/mlworldcam.cpp.i
+
+src/mlworldcam.s: src/mlworldcam.cpp.s
+.PHONY : src/mlworldcam.s
+
+# target to generate assembly for a file
+src/mlworldcam.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.s
+.PHONY : src/mlworldcam.cpp.s
 
 # Help Target
 help:
@@ -210,15 +282,24 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... mldepth_unity"
-	@echo "... src/mldepth_unity.o"
-	@echo "... src/mldepth_unity.i"
-	@echo "... src/mldepth_unity.s"
+	@echo "... src/mlcvcamera.o"
+	@echo "... src/mlcvcamera.i"
+	@echo "... src/mlcvcamera.s"
+	@echo "... src/mldepth.o"
+	@echo "... src/mldepth.i"
+	@echo "... src/mldepth.s"
+	@echo "... src/mlheadtracking.o"
+	@echo "... src/mlheadtracking.i"
+	@echo "... src/mlheadtracking.s"
 	@echo "... src/mlperception_service.o"
 	@echo "... src/mlperception_service.i"
 	@echo "... src/mlperception_service.s"
-	@echo "... src/mlworldcam_unity.o"
-	@echo "... src/mlworldcam_unity.i"
-	@echo "... src/mlworldcam_unity.s"
+	@echo "... src/mlrgbcamera.o"
+	@echo "... src/mlrgbcamera.i"
+	@echo "... src/mlrgbcamera.s"
+	@echo "... src/mlworldcam.o"
+	@echo "... src/mlworldcam.i"
+	@echo "... src/mlworldcam.s"
 .PHONY : help
 
 

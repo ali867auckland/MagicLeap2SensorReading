@@ -8,9 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp" "CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp" "CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp" "CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp" "CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.cpp" "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o.d"
-  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp" "CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp" "CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp" "CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o.d"
   "" "libmldepth_unity.so" "gcc" "CMakeFiles/mldepth_unity.dir/link.d"
   )
 

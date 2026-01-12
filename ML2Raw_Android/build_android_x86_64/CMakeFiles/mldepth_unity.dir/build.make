@@ -86,52 +86,100 @@ CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.s"
 	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.cpp -o CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.s
 
-CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
-CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp
-CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp
+CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
+CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp
+CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp
 
-CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.i"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp > CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.i
+CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.i"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp > CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.i
 
-CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.s"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam_unity.cpp -o CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.s
+CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.s"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp -o CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.s
 
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp
+CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
+CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp
+CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp
 
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.i"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp > CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.i
+CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.i"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp > CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.i
 
-CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.s"
-	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth_unity.cpp -o CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.s
+CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.s"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp -o CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.s
+
+CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
+CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp
+CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp
+
+CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.i"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp > CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.i
+
+CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.s"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp -o CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.s
+
+CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
+CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp
+CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp
+
+CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.i"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp > CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.i
+
+CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.s"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp -o CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.s
+
+CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o: CMakeFiles/mldepth_unity.dir/flags.make
+CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o: /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp
+CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o -MF CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o.d -o CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o -c /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp
+
+CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.i"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp > CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.i
+
+CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s"
+	/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=x86_64-none-linux-android29 --sysroot=/Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp -o CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s
 
 # Object files for target mldepth_unity
 mldepth_unity_OBJECTS = \
 "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o" \
-"CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o" \
-"CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o"
+"CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o" \
+"CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o" \
+"CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o" \
+"CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o" \
+"CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o"
 
 # External object files for target mldepth_unity
 mldepth_unity_EXTERNAL_OBJECTS =
 
 libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o
-libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlworldcam_unity.cpp.o
-libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mldepth_unity.cpp.o
+libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o
+libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o
+libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o
+libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o
+libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o
 libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/build.make
 libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/compiler_depend.ts
 libmldepth_unity.so: /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/liblog.so
 libmldepth_unity.so: /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/libandroid.so
 libmldepth_unity.so: CMakeFiles/mldepth_unity.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library libmldepth_unity.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX shared library libmldepth_unity.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/mldepth_unity.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

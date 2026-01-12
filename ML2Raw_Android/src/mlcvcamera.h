@@ -46,11 +46,11 @@ bool MLCVCameraUnity_GetPose(
 // Get current time from ML system
 int64_t MLCVCameraUnity_GetCurrentTimeNs();
 
-// Shutdown CV camera tracking (does NOT shutdown head tracking)
-void MLCVCameraUnity_Shutdown();
-
 // Check if initialized
 bool MLCVCameraUnity_IsInitialized();
+
+// Shutdown CV camera tracking (does NOT shutdown head tracking)
+void MLCVCameraUnity_Shutdown();
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 public static class MLHeadTrackingNative
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-    private const string LIB = "mlheadtracking_unity";
+    private const string LIB = "mldepth_unity";
 #else
     private const string LIB = "__Internal";
 #endif
