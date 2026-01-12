@@ -29,4 +29,5 @@
   <uses-permission android:name="com.magicleap.permission.WEBVIEW" />
   <uses-permission android:name="com.magicleap.permission.MARKER_TRACKING" />
   <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="com.magicleap.permission.SPACE_MANAGER" />
 </manifest>

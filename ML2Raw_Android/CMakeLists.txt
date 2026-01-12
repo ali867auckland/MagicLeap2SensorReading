@@ -24,6 +24,7 @@ find_library(android-lib android)
 
 target_link_libraries(mldepth_unity
   perception.magicleap
+  camera.magicleap
   ${log-lib}
   ${android-lib}
 )

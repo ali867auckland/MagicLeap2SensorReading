@@ -34,10 +34,11 @@ static bool g_hasNewFrame = false;
 
 // Camera config
 static RGBCaptureMode g_captureMode = RGBCaptureMode_Video;
+static MLCameraCaptureType g_activeCaptureType = MLCameraCaptureType_Video;
 
-// Forward declarations
+// Forward declarations - signatures per ml_camera_v2.h (note: on_capture_failed has different signature than on_capture_completed!)
 static void OnVideoBufferAvailable(const MLCameraOutput* output, const MLHandle metadata_handle, const MLCameraResultExtras* extra, void* data);
-static void OnCaptureCompleted(const MLCameraResultExtras* extra, void* data);
+static void OnCaptureCompleted(MLHandle request_handle, const MLCameraResultExtras* extra, void* data);
 static void OnCaptureFailed(const MLCameraResultExtras* extra, void* data);
 
 // Get camera pose using existing CV camera infrastructure
@@ -154,25 +155,39 @@ static void OnVideoBufferAvailable(const MLCameraOutput* output, const MLHandle 
     }
 }
 
-static void OnCaptureCompleted(const MLCameraResultExtras* extra, void* data) {
+// Capture completed callback - CORRECT SIGNATURE with request_handle
+static void OnCaptureCompleted(MLHandle request_handle, const MLCameraResultExtras* extra, void* data) {
+    (void)request_handle;
     (void)extra;
     (void)data;
 }
 
+// Capture failed callback - NO request_handle (different from on_capture_completed!)
 static void OnCaptureFailed(const MLCameraResultExtras* extra, void* data) {
     (void)extra;
     (void)data;
     LOGE("Capture failed");
 }
 
-static void OnDeviceAvailable(void* data) {
+// Device status callbacks - CORRECT SIGNATURES per ml_camera_v2.h
+static void OnDeviceIdle(void* data) {
     (void)data;
-    LOGI("Camera device available");
+    LOGI("Camera device idle");
 }
 
-static void OnDeviceUnavailable(void* data) {
+static void OnDeviceStreaming(void* data) {
     (void)data;
-    LOGW("Camera device unavailable");
+    LOGI("Camera device streaming");
+}
+
+static void OnDeviceDisconnected(MLCameraDisconnectReason reason, void* data) {
+    (void)data;
+    LOGW("Camera device disconnected, reason=%d", (int)reason);
+}
+
+static void OnDeviceError(MLCameraError error, void* data) {
+    (void)data;
+    LOGE("Camera device error=%d", (int)error);
 }
 
 // Initialize RGB camera (CV camera must be initialized separately)
@@ -207,11 +222,13 @@ bool MLRGBCameraUnity_Init(RGBCaptureMode mode) {
         LOGI("RGB Camera connected context=%llu", (unsigned long long)g_cameraContext);
     }
 
-    // Set device status callbacks
+    // Set device status callbacks - CORRECT FIELD NAMES per ml_camera_v2.h
     MLCameraDeviceStatusCallbacks deviceCallbacks;
     MLCameraDeviceStatusCallbacksInit(&deviceCallbacks);
-    deviceCallbacks.on_device_available = OnDeviceAvailable;
-    deviceCallbacks.on_device_unavailable = OnDeviceUnavailable;
+    deviceCallbacks.on_device_idle = OnDeviceIdle;
+    deviceCallbacks.on_device_streaming = OnDeviceStreaming;
+    deviceCallbacks.on_device_disconnected = OnDeviceDisconnected;
+    deviceCallbacks.on_device_error = OnDeviceError;
     
     r = MLCameraSetDeviceStatusCallbacks(g_cameraContext, &deviceCallbacks, nullptr);
     if (r != MLResult_Ok) {
@@ -247,13 +264,15 @@ bool MLRGBCameraUnity_StartCapture() {
     captureConfig.num_streams = 1;
     
     // Configure stream based on mode
-    MLCameraCaptureStreamConfig& streamConfig = captureConfig.stream_configs[0];
+    MLCameraCaptureStreamConfig& streamConfig = captureConfig.stream_config[0];
     streamConfig.capture_type = MLCameraCaptureType_Video;
     streamConfig.width = 1280;
     streamConfig.height = 720;
     streamConfig.output_format = MLCameraOutputFormat_YUV_420_888;
+    streamConfig.native_surface_handle = ML_INVALID_HANDLE;  // REQUIRED for YUV capture
     
     if (g_captureMode == RGBCaptureMode_Preview) {
+        // Use Video capture type but lower resolution (Preview callback has different format)
         streamConfig.width = 640;
         streamConfig.height = 480;
     } else if (g_captureMode == RGBCaptureMode_Image) {
@@ -263,15 +282,27 @@ bool MLRGBCameraUnity_StartCapture() {
         streamConfig.output_format = MLCameraOutputFormat_JPEG;
     }
 
-    MLResult r = MLCameraPrepareCapture(g_cameraContext, &captureConfig, nullptr);
+    if (g_debug) {
+        LOGI("Preparing capture: type=%d %dx%d format=%d surface=%llu", 
+             (int)streamConfig.capture_type, 
+             streamConfig.width, streamConfig.height,
+             (int)streamConfig.output_format,
+             (unsigned long long)streamConfig.native_surface_handle);
+    }
+
+    MLHandle requestHandle = ML_INVALID_HANDLE;
+    MLResult r = MLCameraPrepareCapture(g_cameraContext, &captureConfig, &requestHandle);
     if (r != MLResult_Ok) {
         LOGE("MLCameraPrepareCapture failed r=%d", (int)r);
         return false;
     }
 
-    // Set capture callbacks
+    // Set capture callbacks - note: different callbacks for different modes
     MLCameraCaptureCallbacks captureCallbacks;
     MLCameraCaptureCallbacksInit(&captureCallbacks);
+    
+    // Video and Image modes use similar output format
+    // Preview mode uses a different buffer handle format - not supported in this implementation
     captureCallbacks.on_video_buffer_available = OnVideoBufferAvailable;
     captureCallbacks.on_capture_completed = OnCaptureCompleted;
     captureCallbacks.on_capture_failed = OnCaptureFailed;
@@ -282,11 +313,19 @@ bool MLRGBCameraUnity_StartCapture() {
         return false;
     }
 
-    // Start video capture
-    r = MLCameraCaptureVideoStart(g_cameraContext);
-    if (r != MLResult_Ok) {
-        LOGE("MLCameraCaptureVideoStart failed r=%d", (int)r);
-        return false;
+    // Start capture
+    g_activeCaptureType = streamConfig.capture_type;
+    
+    if (streamConfig.capture_type == MLCameraCaptureType_Video) {
+        r = MLCameraCaptureVideoStart(g_cameraContext);
+        if (r != MLResult_Ok) {
+            LOGE("MLCameraCaptureVideoStart failed r=%d", (int)r);
+            return false;
+        }
+    } else if (streamConfig.capture_type == MLCameraCaptureType_Image) {
+        // For image mode, we don't start continuous capture
+        // Images are captured on-demand via MLCameraCaptureImage()
+        LOGI("Image capture mode - use MLCameraCaptureImage() for capture");
     }
 
     g_capturing.store(true);
@@ -302,7 +341,12 @@ void MLRGBCameraUnity_StopCapture() {
         return;
     }
 
-    MLCameraCaptureVideoStop(g_cameraContext);
+    // Stop based on active capture type
+    if (g_activeCaptureType == MLCameraCaptureType_Video) {
+        MLCameraCaptureVideoStop(g_cameraContext);
+    }
+    // Image mode doesn't have continuous capture to stop
+    
     g_capturing.store(false);
     
     LOGI("RGB Camera capture stopped");
