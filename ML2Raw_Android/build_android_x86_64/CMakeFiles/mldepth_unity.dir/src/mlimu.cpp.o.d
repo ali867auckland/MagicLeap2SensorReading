@@ -1,6 +1,6 @@
-CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
-  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp \
-  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.h \
+CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.o: \
+  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlimu.cpp \
+  /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlimu.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdint.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/stdint.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/cdefs.h \
@@ -26,40 +26,32 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stddef_nullptr_t.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stddef_max_align_t.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stddef_offsetof.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstring \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/size_t.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_constant_evaluated.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/string.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/string.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/xlocale.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/strcasecmp.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/int-ll64.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/bitsperlong.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/bitsperlong.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/posix_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/stddef.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/compiler_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/compiler.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/posix_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/posix_types_64.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/posix_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/pthread_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/strings.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/strings.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/string.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/mutex \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/steady_clock.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdbool.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdbool.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/atomic \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/aliases.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_sync.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/contention_t.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/support.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_copyable.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/integral_constant.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstdint \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/support/c11.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/memory_order.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_same.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/underlying_type.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_enum.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/ptrdiff_t.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/addressof.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_const.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/to_gcc_order.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/duration.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__compare/ordering.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/enable_if.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_same.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/integral_constant.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__compare/three_way_comparable.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__compare/common_comparison_category.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/size_t.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__concepts/common_reference_with.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__concepts/convertible_to.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_convertible.h \
@@ -119,7 +111,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_destructible.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_all_extents.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_empty.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_enum.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_literal_type.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_member_pointer.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_nothrow_assignable.h \
@@ -134,8 +125,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivial.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_assignable.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_constructible.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_copyable.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstdint \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_destructible.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_union.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_unsigned.h \
@@ -143,7 +132,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/make_signed.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/make_unsigned.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/rank.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_const.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_pointer.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/remove_volatile.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/result_of.h \
@@ -152,7 +140,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_reference_wrapper.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/functional.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/nat.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/underlying_type.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_final.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/conjunction.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/disjunction.h \
@@ -168,12 +155,29 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/float.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/limits.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/posix_limits.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/poll_with_backoff.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/high_resolution_clock.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/steady_clock.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/time_point.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__condition_variable/condition_variable.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/system_clock.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/ctime \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/time.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/time.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/int-ll64.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/bitsperlong.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/bitsperlong.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/posix_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/stddef.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/compiler_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/compiler.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/posix_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/x86_64-linux-android/asm/posix_types_64.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/asm-generic/posix_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/pthread_types.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/time.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/timespec.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/time_types.h \
@@ -189,7 +193,19 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/ucontext.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sys/user.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/page_size.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/mutex.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/xlocale.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstring \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_constant_evaluated.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/string.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/string.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/strcasecmp.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/strings.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/strings.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/string.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/check_memory_order.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/is_always_lock_free.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_lock_free.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_flag.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/support.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/support/pthread.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/convert_to_timespec.h \
@@ -203,69 +219,9 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/sched.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/sched.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/sched/types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/unique_lock.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/addressof.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/tag_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__system_error/throw_system_error.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/swap.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/move.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cerrno \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/lock_guard.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/once_flag.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/invoke.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/shared_count.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/typeinfo \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__exception/exception.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__verbose_abort \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstddef \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/byte.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/byte.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/max_align_t.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/ptrdiff_t.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstdlib \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdlib.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/stdlib.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/alloca.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/wait.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/wait.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/malloc.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdio.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/stdio.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdarg.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_header_macro.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg___gnuc_va_list.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_list.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_arg.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg___va_copy.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_copy.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/seek_constants.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/stdio.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/stdlib.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/legacy_stdlib_inlines.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_indices.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/integer_sequence.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_size.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/tuple.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/tuple \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__compare/synth_three_way.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/array.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/pair.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/allocator_arg_t.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/uses_allocator.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/find_index.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/ignore.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/make_tuple_types.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_element.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/sfinae_helpers.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_like_ext.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_implicitly_default_constructible.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_relocatable.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/lazy.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/maybe_const.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/unwrap_ref.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/piecewise_construct.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/compare \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_init.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/fence.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/kill_dependency.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cmath \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__math/hypot.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__math/abs.h \
@@ -290,6 +246,70 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__math/remainder.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__math/rounding_functions.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__math/trigonometric_functions.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdlib.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/stdlib.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/alloca.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/wait.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/linux/wait.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/malloc.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdio.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/stdio.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdarg.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_header_macro.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg___gnuc_va_list.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_list.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_arg.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg___va_copy.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/__stdarg_va_copy.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/seek_constants.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/stdio.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/bits/fortify/stdlib.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/legacy_stdlib_inlines.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/compare \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstddef \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/byte.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/byte.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__cstddef/max_align_t.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstdlib \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/mutex \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__condition_variable/condition_variable.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/mutex.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/unique_lock.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/tag_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__system_error/throw_system_error.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/swap.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/move.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cerrno \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/lock_guard.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__mutex/once_flag.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/invoke.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/shared_count.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/typeinfo \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__exception/exception.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__verbose_abort \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_indices.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/integer_sequence.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_size.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/tuple.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/tuple \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__compare/synth_three_way.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/array.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/pair.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/allocator_arg_t.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/uses_allocator.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/find_index.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/ignore.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/make_tuple_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_element.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/sfinae_helpers.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__tuple/tuple_like_ext.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_implicitly_default_constructible.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_trivially_relocatable.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/lazy.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/maybe_const.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/unwrap_ref.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/piecewise_construct.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/exception \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__exception/exception_ptr.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__exception/operations.h \
@@ -337,24 +357,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/in_place.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/initializer_list \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/id.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/atomic \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/aliases.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_sync.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/contention_t.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/support.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/support/c11.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/memory_order.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/to_gcc_order.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/poll_with_backoff.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/high_resolution_clock.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/check_memory_order.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/is_always_lock_free.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_lock_free.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_flag.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/atomic_init.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/fence.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__atomic/kill_dependency.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/concepts \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdexcept \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/system_error \
@@ -621,53 +623,44 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__system_error/error_code.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__system_error/error_condition.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__system_error/system_error.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/vector \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/comparison.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/lexicographical_compare_three_way.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/three_way_comp_ref_type.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/vector.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/swap.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/vector.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_n.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_out_result.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__iterator/unreachable_sentinel.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/temp_value.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__split_buffer \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/container_traits.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/container_traits.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/vector_bool.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__bit_reference \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/pmr.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/array \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__iterator/static_bounded_iter.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/clocale \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/locale.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/thread \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/this_thread.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/thread.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/locale \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__locale \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__locale_dir/locale_base_api.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__locale_dir/locale_base_api/android.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__locale_dir/locale_base_api/bsd_locale_fallbacks.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/locale.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__utility/no_destroy.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/clocale \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__locale_dir/pad_and_output.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/ios \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/streambuf \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/cstdarg \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/thread \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/this_thread.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__thread/thread.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/sstream \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__ostream/basic_ostream.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__ostream/put_character_sequence.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/bitset \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__bit_reference \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/is_char_like_type.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/istream \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/ostream \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/format \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/array \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/lexicographical_compare_three_way.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/three_way_comp_ref_type.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__iterator/static_bounded_iter.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/queue \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/in_out_result.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/deque.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/queue.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/vector.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/deque \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__memory/temp_value.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__split_buffer \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/container_traits.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/functional \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/binary_negate.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/bind.h \
@@ -681,6 +674,12 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/function.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__type_traits/strip_signature.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/boyer_moore_searcher.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/vector.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__algorithm/ranges_copy_n.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__iterator/unreachable_sentinel.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/comparison.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/container_traits.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/swap.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/unordered_map \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/is_transparent.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__hash_table \
@@ -692,6 +691,9 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/default_searcher.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/not_fn.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__functional/perfect_forward.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/vector \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/vector_bool.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__vector/pmr.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stack \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__fwd/stack.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/print \
@@ -699,11 +701,6 @@ CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o: \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/chrono \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/__chrono/file_clock.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/forward_list \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_world_camera.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_api.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/c++/v1/stdbool.h \
-  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/include/stdbool.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_coordinate_frame_uid.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_version.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/sensor.h \
+  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/looper.h \
   /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include/android/log.h

@@ -237,7 +237,7 @@ public class RGBCameraNativeConsumer : MonoBehaviour
 
             // Header: "RGBPOSE\0" + version + captureMode
             bw.Write(new byte[] { (byte)'R', (byte)'G', (byte)'B', (byte)'P', (byte)'O', (byte)'S', (byte)'E', 0 });
-            bw.Write(1); // version
+            bw.Write(2); // version
             bw.Write((int)captureMode);
 
             return true;
@@ -304,6 +304,7 @@ public class RGBCameraNativeConsumer : MonoBehaviour
         if (!ok || written <= 0) return;
 
         frameIndex++;
+        SensorTimestampBus.Publish(info.timestampNs, frameIndex);
         frameCount = frameIndex;
         if (info.HasValidPose) framesWithValidPose++;
 
@@ -373,7 +374,7 @@ public class RGBCameraNativeConsumer : MonoBehaviour
             bw.Write(info.strideBytes);
             bw.Write(info.format);
             
-            bw.Write(info.pose_valid);
+            bw.Write((byte)(info.pose_valid != 0 ? 1 : 0));
             bw.Write(info.pose_result_code);
             
             bw.Write(info.pose_rotation_x);

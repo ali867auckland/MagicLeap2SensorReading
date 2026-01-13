@@ -201,6 +201,30 @@ src/mlheadtracking.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.s
 .PHONY : src/mlheadtracking.cpp.s
 
+src/mlimu.o: src/mlimu.cpp.o
+.PHONY : src/mlimu.o
+
+# target to build an object file
+src/mlimu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.o
+.PHONY : src/mlimu.cpp.o
+
+src/mlimu.i: src/mlimu.cpp.i
+.PHONY : src/mlimu.i
+
+# target to preprocess a source file
+src/mlimu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.i
+.PHONY : src/mlimu.cpp.i
+
+src/mlimu.s: src/mlimu.cpp.s
+.PHONY : src/mlimu.s
+
+# target to generate assembly for a file
+src/mlimu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.s
+.PHONY : src/mlimu.cpp.s
+
 src/mlperception_service.o: src/mlperception_service.cpp.o
 .PHONY : src/mlperception_service.o
 
@@ -291,6 +315,9 @@ help:
 	@echo "... src/mlheadtracking.o"
 	@echo "... src/mlheadtracking.i"
 	@echo "... src/mlheadtracking.s"
+	@echo "... src/mlimu.o"
+	@echo "... src/mlimu.i"
+	@echo "... src/mlimu.s"
 	@echo "... src/mlperception_service.o"
 	@echo "... src/mlperception_service.i"
 	@echo "... src/mlperception_service.s"

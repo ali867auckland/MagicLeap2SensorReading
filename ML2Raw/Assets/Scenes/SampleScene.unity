@@ -524,6 +524,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldCameraNativeConsumer
   identifiersMask: 7
   debugMode: 1
+--- !u!1 &1493058149
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493058150}
+  - component: {fileID: 1493058151}
+  m_Layer: 0
+  m_Name: IMUCameraConsumer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1493058150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493058149}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1493058151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493058149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f849a407f664267b0e811ee5bb9fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IMUNativeConsumer
+  sampleRateHz: 200
+  debugMode: 1
 --- !u!1 &1631486317
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,9 +615,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CVCameraNativeConsumer
   sampleInterval: 0
+  writeFailedRecords: 0
   debugMode: 1
   isRunning: 0
-  frameCount: 0
+  recordCount: 0
 --- !u!1 &1945564138
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DepthNativeConsumer
   useShortRange: 1
   debugMode: 1
-  rejectBothStreams: 1
 --- !u!1 &1945902784
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,3 +782,4 @@ SceneRoots:
   - {fileID: 1945902785}
   - {fileID: 1631486318}
   - {fileID: 2085885698}
+  - {fileID: 1493058150}

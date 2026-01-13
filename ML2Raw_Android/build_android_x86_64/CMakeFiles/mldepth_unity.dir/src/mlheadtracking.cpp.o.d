@@ -630,4 +630,5 @@ CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o: \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_version.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_perception.h \
   /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_snapshot.h \
-  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_types.h \
+  /Users/azyl/MagicLeap/mlsdk/v1.12.0/include/ml_time.h

@@ -3,11 +3,13 @@
 #include <atomic>
 #include <mutex>
 #include <cstring>
+#include <time.h>
 
 #include <android/log.h>
 #include <ml_head_tracking.h>
 #include <ml_perception.h>
 #include <ml_snapshot.h>
+#include <ml_time.h>
 
 #define LOG_TAG "MLHeadTrackingUnity"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,  LOG_TAG, __VA_ARGS__)
@@ -36,10 +38,24 @@ static const char* ResultToString(MLResult r) {
     }
 }
 
+// Helper: get "now" as MLTime (ns) based on CLOCK_MONOTONIC
+static int64_t NowMlTimeNs() {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+
+    MLTime mlTime = 0;
+    MLResult r = MLTimeConvertSystemTimeToMLTime(&ts, &mlTime);
+    if (r != MLResult_Ok) {
+        // Fallback to monotonic ns if conversion fails
+        return (int64_t)ts.tv_sec * 1000000000LL + (int64_t)ts.tv_nsec;
+    }
+    return (int64_t)mlTime;
+}
+
 // Initialize head tracking
 bool MLHeadTrackingUnity_Init() {
     std::lock_guard<std::mutex> guard(g_lock);
-    
+
     if (g_initialized.load()) {
         LOGI("Already initialized");
         return true;
@@ -57,8 +73,10 @@ bool MLHeadTrackingUnity_Init() {
         LOGI("MLHeadTrackingCreate OK handle=%llu", (unsigned long long)g_headTrackingHandle);
     }
 
-    // Get the static data (coordinate frame UID)
+    // CRITICAL FIX: Get the static data to obtain the head coordinate frame UID
     MLHeadTrackingStaticData staticData;
+    std::memset(&staticData, 0, sizeof(staticData));
+
     r = MLHeadTrackingGetStaticData(g_headTrackingHandle, &staticData);
     if (r != MLResult_Ok) {
         LOGE("MLHeadTrackingGetStaticData FAILED r=%d (%s)", (int)r, ResultToString(r));
@@ -70,7 +88,7 @@ bool MLHeadTrackingUnity_Init() {
     g_headFrameUID = staticData.coord_frame_head;
 
     if (g_debug) {
-        LOGI("Head tracking coordinate frame UID obtained");
+        LOGI("Head tracking coord_frame_head UID set");
     }
 
     g_initialized.store(true);
@@ -94,13 +112,17 @@ bool MLHeadTrackingUnity_GetPose(HeadPoseData* out_pose) {
 
     std::lock_guard<std::mutex> guard(g_lock);
 
-    // Get perception snapshot
+    // Timestamp for this sample (use MLTime timeline)
+    const int64_t nowMlNs = NowMlTimeNs();
+
+    // Get perception snapshot (safe across SDKs)
     MLSnapshot* snapshot = nullptr;
     MLResult r = MLPerceptionGetSnapshot(&snapshot);
     if (r != MLResult_Ok || snapshot == nullptr) {
         out_pose->resultCode = (int32_t)r;
+        out_pose->timestampNs = nowMlNs;
         if (g_debug) {
-            LOGW("MLPerceptionGetSnapshot failed r=%d", (int)r);
+            LOGW("MLPerceptionGetSnapshot failed r=%d (%s)", (int)r, ResultToString(r));
         }
         return false;
     }
@@ -111,17 +133,12 @@ bool MLHeadTrackingUnity_GetPose(HeadPoseData* out_pose) {
     transform.rotation.w = 1.0f;
 
     r = MLSnapshotGetTransform(snapshot, &g_headFrameUID, &transform);
-    
-    // Get timestamp from snapshot
-    MLTime snapshotTimestamp = 0;
-    // Note: MLSnapshotGetTimestamp may not exist in all SDK versions
-    // If it fails, we'll use 0
 
     // Release snapshot before processing results
     MLPerceptionReleaseSnapshot(snapshot);
 
     out_pose->resultCode = (int32_t)r;
-    out_pose->timestampNs = (int64_t)snapshotTimestamp;
+    out_pose->timestampNs = nowMlNs;
 
     if (r != MLResult_Ok) {
         if (g_debug && r != MLResult_Timeout) {
@@ -139,30 +156,29 @@ bool MLHeadTrackingUnity_GetPose(HeadPoseData* out_pose) {
     out_pose->position_y = transform.position.y;
     out_pose->position_z = transform.position.z;
 
-    // Get tracking state using the NEWER API (MLHeadTrackingStateEx)
+    // Get tracking state (new API)
     MLHeadTrackingStateEx stateEx;
     MLHeadTrackingStateExInit(&stateEx);
-    
+
     r = MLHeadTrackingGetStateEx(g_headTrackingHandle, &stateEx);
     if (r == MLResult_Ok) {
         out_pose->status = (uint32_t)stateEx.status;
         out_pose->confidence = stateEx.confidence;
-        out_pose->errorFlags = stateEx.error;  // This is a bitmask of MLHeadTrackingErrorFlag
+        out_pose->errorFlags = stateEx.error;  // bitmask of MLHeadTrackingErrorFlag
     } else {
-        // Fallback: try deprecated API
+        // Fallback to deprecated API
         MLHeadTrackingState state;
+        std::memset(&state, 0, sizeof(state));
         state.mode = MLHeadTrackingMode_Unavailable;
-        state.confidence = 0.0f;
-        state.error = MLHeadTrackingError_Unknown;
-        
+
         MLResult r2 = MLHeadTrackingGetState(g_headTrackingHandle, &state);
         if (r2 == MLResult_Ok) {
-            // Map old mode to new status
-            out_pose->status = (state.mode == MLHeadTrackingMode_6DOF) 
-                ? (uint32_t)MLHeadTrackingStatus_Valid 
+            out_pose->status = (state.mode == MLHeadTrackingMode_6DOF)
+                ? (uint32_t)MLHeadTrackingStatus_Valid
                 : (uint32_t)MLHeadTrackingStatus_Invalid;
+
             out_pose->confidence = state.confidence;
-            // Map old error enum to new error flags
+
             switch (state.error) {
                 case MLHeadTrackingError_None:
                     out_pose->errorFlags = MLHeadTrackingErrorFlag_None;
@@ -180,19 +196,15 @@ bool MLHeadTrackingUnity_GetPose(HeadPoseData* out_pose) {
         }
     }
 
-    // Check for map events (returns bitmask, not array)
+    // Map events (bitmask)
     uint64_t mapEventsMask = 0;
     r = MLHeadTrackingGetMapEvents(g_headTrackingHandle, &mapEventsMask);
     if (r == MLResult_Ok && mapEventsMask != 0) {
         out_pose->hasMapEvent = true;
         out_pose->mapEventsMask = mapEventsMask;
-        
+
         if (g_debug) {
             LOGI("Map events bitmask: 0x%llx", (unsigned long long)mapEventsMask);
-            if (mapEventsMask & MLHeadTrackingMapEvent_Lost) LOGI("  - Map Lost");
-            if (mapEventsMask & MLHeadTrackingMapEvent_Recovered) LOGI("  - Map Recovered");
-            if (mapEventsMask & MLHeadTrackingMapEvent_RecoveryFailed) LOGI("  - Recovery Failed");
-            if (mapEventsMask & MLHeadTrackingMapEvent_NewSession) LOGI("  - New Session");
         }
     } else {
         out_pose->hasMapEvent = false;
@@ -204,9 +216,7 @@ bool MLHeadTrackingUnity_GetPose(HeadPoseData* out_pose) {
 
 // Get the handle for CV camera to use
 uint64_t MLHeadTrackingUnity_GetHandle() {
-    if (!g_initialized.load()) {
-        return 0;
-    }
+    if (!g_initialized.load()) return 0;
     return (uint64_t)g_headTrackingHandle;
 }
 
@@ -219,9 +229,7 @@ bool MLHeadTrackingUnity_IsInitialized() {
 void MLHeadTrackingUnity_Shutdown() {
     std::lock_guard<std::mutex> guard(g_lock);
 
-    if (!g_initialized.load()) {
-        return;
-    }
+    if (!g_initialized.load()) return;
 
     g_initialized.store(false);
 

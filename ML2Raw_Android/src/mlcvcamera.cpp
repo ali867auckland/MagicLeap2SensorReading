@@ -33,6 +33,8 @@ static const char* ResultToString(MLResult r) {
         case MLResult_PerceptionSystemNotStarted: return "PerceptionSystemNotStarted";
         case MLResult_PermissionDenied: return "PermissionDenied";
         case MLResult_Timeout: return "Timeout";
+        case MLResult_PoseNotFound: return "PoseNotFound";
+
         default: return "Unknown";
     }
 }
@@ -76,20 +78,19 @@ bool MLCVCameraUnity_Init(uint64_t head_tracking_handle) {
     return true;
 }
 
-// Get current time
 int64_t MLCVCameraUnity_GetCurrentTimeNs() {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+
     MLTime mlTime = 0;
-    MLResult r = MLTimeConvertSystemTimeToMLTime(0, &mlTime);
-    
+    MLResult r = MLTimeConvertSystemTimeToMLTime(&ts, &mlTime);
     if (r != MLResult_Ok) {
-        // Fallback: use system clock
-        struct timespec ts;
-        clock_gettime(CLOCK_BOOTTIME, &ts);
+        // Fallback: still return monotonic ns (closest meaningful timebase)
         return (int64_t)ts.tv_sec * 1000000000LL + (int64_t)ts.tv_nsec;
     }
-    
     return (int64_t)mlTime;
 }
+
 
 // Get camera pose
 bool MLCVCameraUnity_GetPose(int64_t timestamp_ns, CVCameraID camera_id, CVCameraPose* out_pose) {

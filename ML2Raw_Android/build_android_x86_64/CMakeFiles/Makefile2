@@ -85,12 +85,12 @@ clean: CMakeFiles/mldepth_unity.dir/clean
 CMakeFiles/mldepth_unity.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target mldepth_unity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target mldepth_unity"
 .PHONY : CMakeFiles/mldepth_unity.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/mldepth_unity.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles 8
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/mldepth_unity.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles 0
 .PHONY : CMakeFiles/mldepth_unity.dir/rule
@@ -102,7 +102,7 @@ mldepth_unity: CMakeFiles/mldepth_unity.dir/rule
 # codegen rule for target.
 CMakeFiles/mldepth_unity.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=1,2,3,4,5,6,7 "Finished codegen for target mldepth_unity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/build_android_x86_64/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Finished codegen for target mldepth_unity"
 .PHONY : CMakeFiles/mldepth_unity.dir/codegen
 
 # clean rule for target.

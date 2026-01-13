@@ -6,6 +6,7 @@ libmldepth_unity.so: \
  CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o \
  CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o \
  CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o \
+ CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.o \
  /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libperception.magicleap.so \
  /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libcamera.magicleap.so \
  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/liblog.so \
@@ -34,6 +35,8 @@ CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o:
 CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o:
 
 CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o:
+
+CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.o:
 
 /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libperception.magicleap.so:
 

@@ -8,6 +8,7 @@ add_library(mldepth_unity SHARED
   src/mlcvcamera.cpp
   src/mlworldcam.cpp
   src/mldepth.cpp
+  src/mlimu.cpp
 )
 
 target_include_directories(mldepth_unity PRIVATE
