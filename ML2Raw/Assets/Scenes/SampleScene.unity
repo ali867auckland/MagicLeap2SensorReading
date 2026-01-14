@@ -522,8 +522,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d916dfb6b7d444e82a8aeaa67fbc2a98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldCameraNativeConsumer
-  identifiersMask: 7
+  captureLeft: 1
+  captureRight: 1
+  captureCenter: 1
   debugMode: 1
+  leftFrames: 0
+  rightFrames: 0
+  centerFrames: 0
+  totalFrames: 0
+--- !u!1 &1262428234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262428235}
+  - component: {fileID: 1262428236}
+  m_Layer: 0
+  m_Name: MeshingConsumer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1262428235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262428234}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1262428236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262428234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a966fdffd6614d3e9a343261c7c0f02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeshingNativeConsumer
+  computeNormals: 1
+  computeConfidence: 0
+  levelOfDetail: 1
+  queryExtent: 5
+  updateInterval: 1
+  fillHoleLength: 0.5
+  disconnectedArea: 0.25
+  debugMode: 1
+  isRunning: 0
+  totalBlocks: 0
+  totalVertices: 0
+  totalTriangles: 0
 --- !u!1 &1493058149
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +632,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IMUNativeConsumer
   sampleRateHz: 200
   debugMode: 1
+--- !u!1 &1499489547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499489548}
+  - component: {fileID: 1499489549}
+  m_Layer: 0
+  m_Name: GazeRecognitionConsumer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499489548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499489547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1499489549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499489547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f693cfa7fd2d4d8493daaedcec9c681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GazeRecognitionNativeConsumer
+  targetSampleRate: 60
+  debugMode: 1
+  isRunning: 0
+  sampleCount: 0
+  currentBehavior: Unknown
 --- !u!1 &1631486317
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +722,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1631486317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd51c7ea3c034595b01738c03579613, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e85805e029cf4a7db945b5e9b250d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CVCameraNativeConsumer
   sampleInterval: 0
@@ -619,6 +730,54 @@ MonoBehaviour:
   debugMode: 1
   isRunning: 0
   recordCount: 0
+--- !u!1 &1866302466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1866302467}
+  - component: {fileID: 1866302468}
+  m_Layer: 0
+  m_Name: EyeTrackingConsumer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1866302467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866302466}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1866302468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866302466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99368f664bc5d482fb1e7478fdf5bb44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EyeTrackingNativeConsumer
+  targetSampleRate: 60
+  debugMode: 1
+  isRunning: 0
+  sampleCount: 0
 --- !u!1 &1945564138
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,7 +823,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DepthNativeConsumer
   useShortRange: 1
+  captureBothRanges: 1
+  streamSwitchInterval: 1
   debugMode: 1
+  currentRange: N/A
+  totalFrames: 0
+  shortFrames: 0
+  longFrames: 0
 --- !u!1 &1945902784
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,3 +948,6 @@ SceneRoots:
   - {fileID: 1631486318}
   - {fileID: 2085885698}
   - {fileID: 1493058150}
+  - {fileID: 1866302467}
+  - {fileID: 1499489548}
+  - {fileID: 1262428235}

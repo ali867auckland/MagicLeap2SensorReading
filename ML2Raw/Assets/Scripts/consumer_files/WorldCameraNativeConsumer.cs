@@ -8,19 +8,32 @@ public class WorldCameraNativeConsumer : MonoBehaviour
 {
     private const string CameraPermission = "android.permission.CAMERA";
 
-    // MLWorldCameraIdentifier: Left=1, Right=2, Center=4
-    private const uint CAM_CENTER = 4;
-
-    [Header("WorldCam Config")]
-    [Tooltip("Camera mask: 1=Left, 2=Right, 4=Center, 7=All. Center (4) is most reliable.")]
-    [SerializeField] private uint identifiersMask = CAM_CENTER;
+    [Header("Camera Selection")]
+    [Tooltip("Capture LEFT camera (1016x1016)")]
+    [SerializeField] private bool captureLeft = true;
+    
+    [Tooltip("Capture RIGHT camera (1016x1016)")]
+    [SerializeField] private bool captureRight = true;
+    
+    [Tooltip("Capture CENTER camera (1016x1016)")]
+    [SerializeField] private bool captureCenter = true;
 
     [Header("Debug")]
     [SerializeField] private bool debugMode = true;
 
-    private byte[] buf = new byte[8 * 1024 * 1024];
-    private GCHandle handle;
-    private IntPtr ptr;
+    [Header("Status (Read Only)")]
+    [SerializeField] private uint leftFrames = 0;
+    [SerializeField] private uint rightFrames = 0;
+    [SerializeField] private uint centerFrames = 0;
+    [SerializeField] private uint totalFrames = 0;
+
+    // Separate buffers for each camera to avoid contention
+    private byte[] bufLeft = new byte[2 * 1024 * 1024];
+    private byte[] bufRight = new byte[2 * 1024 * 1024];
+    private byte[] bufCenter = new byte[2 * 1024 * 1024];
+    
+    private GCHandle handleLeft, handleRight, handleCenter;
+    private IntPtr ptrLeft, ptrRight, ptrCenter;
 
     private bool started = false;
     private uint frameIndex = 0;
@@ -32,8 +45,15 @@ public class WorldCameraNativeConsumer : MonoBehaviour
 
     void Start()
     {
-        handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
-        ptr = handle.AddrOfPinnedObject();
+        // Allocate pinned buffers
+        handleLeft = GCHandle.Alloc(bufLeft, GCHandleType.Pinned);
+        ptrLeft = handleLeft.AddrOfPinnedObject();
+        
+        handleRight = GCHandle.Alloc(bufRight, GCHandleType.Pinned);
+        ptrRight = handleRight.AddrOfPinnedObject();
+        
+        handleCenter = GCHandle.Alloc(bufCenter, GCHandleType.Pinned);
+        ptrCenter = handleCenter.AddrOfPinnedObject();
 
         Permissions.RequestPermission(CameraPermission, OnGranted, OnDenied, OnDenied);
     }
@@ -49,6 +69,19 @@ public class WorldCameraNativeConsumer : MonoBehaviour
             return;
         }
 
+        // Build camera mask from checkboxes
+        uint cameraMask = 0;
+        if (captureLeft) cameraMask |= MLWorldCamNative.CAM_LEFT;
+        if (captureRight) cameraMask |= MLWorldCamNative.CAM_RIGHT;
+        if (captureCenter) cameraMask |= MLWorldCamNative.CAM_CENTER;
+
+        if (cameraMask == 0)
+        {
+            Debug.LogError("[WORLD CAM] No cameras selected!");
+            enabled = false;
+            return;
+        }
+
         outPath = Path.Combine(Application.persistentDataPath,
             $"worldcam_raw_{DateTime.Now:yyyyMMdd_HHmmss}.bin");
 
@@ -57,14 +90,19 @@ public class WorldCameraNativeConsumer : MonoBehaviour
 
         // File header
         bw.Write(new byte[] { (byte)'W', (byte)'O', (byte)'R', (byte)'L', (byte)'D', (byte)'C', (byte)'A', (byte)'M' });
-        bw.Write(1); // version
-        bw.Write(identifiersMask);
+        bw.Write(2); // version 2 = multi-camera
+        bw.Write(cameraMask);
 
         started = true;
 
-        Debug.Log($"[WORLD CAM] Requesting cameras mask={identifiersMask}");
+        // Log which cameras are enabled
+        string cams = "";
+        if (captureLeft) cams += "LEFT ";
+        if (captureRight) cams += "RIGHT ";
+        if (captureCenter) cams += "CENTER ";
+        Debug.Log($"[WORLD CAM] Mode: {cams.Trim()} (mask={cameraMask})");
 
-        bool ok = MLWorldCamNative.MLWorldCamUnity_Init(identifiersMask);
+        bool ok = MLWorldCamNative.MLWorldCamUnity_Init(cameraMask);
         Debug.Log("[WORLD CAM] Init result: " + ok);
 
         if (!ok)
@@ -85,6 +123,37 @@ public class WorldCameraNativeConsumer : MonoBehaviour
         enabled = false;
     }
 
+    /// <summary>
+    /// Compute image brightness statistics from grayscale buffer.
+    /// </summary>
+    private void ComputeBrightnessStats(byte[] buffer, int bytesWritten,
+        out int minBrightness, out int maxBrightness, out float avgBrightness)
+    {
+        minBrightness = 255;
+        maxBrightness = 0;
+        avgBrightness = 0f;
+
+        if (bytesWritten <= 0) return;
+
+        long sum = 0;
+        int step = 16;
+        int sampleCount = 0;
+
+        for (int i = 0; i < bytesWritten; i += step)
+        {
+            byte val = buffer[i];
+            if (val < minBrightness) minBrightness = val;
+            if (val > maxBrightness) maxBrightness = val;
+            sum += val;
+            sampleCount++;
+        }
+
+        if (sampleCount > 0)
+        {
+            avgBrightness = (float)sum / sampleCount;
+        }
+    }
+
     void Update()
     {
         if (!started || bw == null) return;
@@ -92,20 +161,34 @@ public class WorldCameraNativeConsumer : MonoBehaviour
         // Wait for camera to warm up
         if (Time.time - initTime < 2.0f) return;
 
-        bool ok = MLWorldCamNative.MLWorldCamUnity_TryGetLatest(
-            100, out var info, ptr, buf.Length, out int written);
+        // Poll each enabled camera
+        if (captureLeft) TryCapture(MLWorldCamNative.CAM_LEFT, bufLeft, ptrLeft, "LEFT", ref leftFrames);
+        if (captureRight) TryCapture(MLWorldCamNative.CAM_RIGHT, bufRight, ptrRight, "RIGHT", ref rightFrames);
+        if (captureCenter) TryCapture(MLWorldCamNative.CAM_CENTER, bufCenter, ptrCenter, "CENTER", ref centerFrames);
 
-        if (!ok)
+        // Periodic flush
+        if ((totalFrames % 30) == 0 && totalFrames > 0)
         {
-            if (written > buf.Length) ResizeBuffer(written);
-            return;
+            bw.Flush();
+            fs.Flush();
         }
+    }
 
-        if (written <= 0) return;
+    private void TryCapture(uint camId, byte[] buffer, IntPtr ptr, string camName, ref uint camFrameCount)
+    {
+        // Check if this camera has a new frame
+        if (!MLWorldCamNative.MLWorldCamUnity_HasNewFrame(camId)) return;
+
+        bool ok = MLWorldCamNative.MLWorldCamUnity_TryGetLatest(
+            camId, out var info, ptr, buffer.Length, out int written);
+
+        if (!ok || written <= 0) return;
 
         frameIndex++;
+        totalFrames = frameIndex;
+        camFrameCount++;
 
-        // Write frame
+        // Write frame with camera ID
         bw.Write(frameIndex);
         bw.Write(info.timestampNs);
         bw.Write(info.camId);
@@ -115,28 +198,14 @@ public class WorldCameraNativeConsumer : MonoBehaviour
         bw.Write(info.strideBytes);
         bw.Write(info.bytesPerPixel);
         bw.Write(written);
-        bw.Write(buf, 0, written);
+        bw.Write(buffer, 0, written);
 
-        if (debugMode && (frameIndex % 30 == 0))
+        if (debugMode && (camFrameCount % 30 == 0))
         {
-            Debug.Log($"[WORLD CAM] frame={frameIndex} cam={info.camId} {info.width}x{info.height} bytes={written}");
+            ComputeBrightnessStats(buffer, written, out int minB, out int maxB, out float avgB);
+            Debug.Log($"[WORLD CAM] {camName} frame={camFrameCount} {info.width}x{info.height} " +
+                      $"brightness: min={minB} max={maxB} avg={avgB:F0}");
         }
-
-        if ((frameIndex % 30) == 0)
-        {
-            bw.Flush();
-            fs.Flush();
-        }
-    }
-
-    private void ResizeBuffer(int neededBytes)
-    {
-        int newSize = neededBytes + (neededBytes / 8);
-        if (handle.IsAllocated) handle.Free();
-        buf = new byte[newSize];
-        handle = GCHandle.Alloc(buf, GCHandleType.Pinned);
-        ptr = handle.AddrOfPinnedObject();
-        Debug.Log($"[WORLD CAM] Resized buffer to {newSize} bytes");
     }
 
     void OnDisable() => Shutdown();
@@ -148,11 +217,10 @@ public class WorldCameraNativeConsumer : MonoBehaviour
         started = false;
 
         try { MLWorldCamNative.MLWorldCamUnity_Shutdown(); } catch { }
-
         CleanupFile();
+        FreeBuffers();
 
-        if (handle.IsAllocated) handle.Free();
-        ptr = IntPtr.Zero;
+        Debug.Log($"[WORLD CAM] Saved {totalFrames} frames (L={leftFrames} R={rightFrames} C={centerFrames}) to: {outPath}");
     }
 
     private void CleanupFile()
@@ -165,5 +233,16 @@ public class WorldCameraNativeConsumer : MonoBehaviour
         fs = null;
     }
 
-    void OnDestroy() => Shutdown();
+    private void FreeBuffers()
+    {
+        if (handleLeft.IsAllocated) handleLeft.Free();
+        if (handleRight.IsAllocated) handleRight.Free();
+        if (handleCenter.IsAllocated) handleCenter.Free();
+        ptrLeft = ptrRight = ptrCenter = IntPtr.Zero;
+    }
+
+    void OnDestroy()
+    {
+        Shutdown();
+    }
 }

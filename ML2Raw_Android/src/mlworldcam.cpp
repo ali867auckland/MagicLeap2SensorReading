@@ -24,16 +24,35 @@ static MLHandle g_handle = ML_INVALID_HANDLE;
 static std::atomic<bool> g_initialized{false};
 static std::atomic<bool> g_running{false};
 
-// Frame buffer
-static WorldCamFrameInfo g_latestInfo;
-static std::vector<uint8_t> g_latestBytes;
-static std::atomic<bool> g_hasNewFrame{false};
+// Frame buffers for each camera (indexed by camera ID bit position)
+// Index 0 = LEFT (bit 0), Index 1 = RIGHT (bit 1), Index 2 = CENTER (bit 2)
+static WorldCamFrameInfo g_frameInfo[3];
+static std::vector<uint8_t> g_frameBytes[3];
+static std::atomic<bool> g_hasNewFrame[3] = {false, false, false};
+
+// Track which cameras are enabled
+static uint32_t g_enabledCameras = 0;
 
 // Capture thread
 static std::thread g_thread;
 
+// Convert camera ID bitmask to array index
+static int CamIdToIndex(uint32_t camId) {
+    if (camId == CAM_LEFT) return 0;
+    if (camId == CAM_RIGHT) return 1;
+    if (camId == CAM_CENTER) return 2;
+    return -1;
+}
+
+static const char* CamIdToName(uint32_t camId) {
+    if (camId == CAM_LEFT) return "LEFT";
+    if (camId == CAM_RIGHT) return "RIGHT";
+    if (camId == CAM_CENTER) return "CENTER";
+    return "UNKNOWN";
+}
+
 static void CaptureLoop() {
-    LOGI("Capture thread started");
+    LOGI("Capture thread started (enabled cameras mask=%u)", g_enabledCameras);
     
     while (g_running.load()) {
         // MUST pre-initialize the struct - SDK checks this!
@@ -62,25 +81,32 @@ static void CaptureLoop() {
             continue;
         }
         
-        // Get first available frame
-        const MLWorldCameraFrame& f = data_ptr->frames[0];
-        const MLWorldCameraFrameBuffer& fb = f.frame_buffer;
-        
-        if (fb.data && fb.size > 0) {
+        // Process ALL frames returned (up to 3 cameras)
+        {
             std::lock_guard<std::mutex> lock(g_mutex);
             
-            g_latestInfo.camId = (int32_t)f.id;
-            g_latestInfo.frameType = (int32_t)f.frame_type;
-            g_latestInfo.timestampNs = (int64_t)f.timestamp;
-            g_latestInfo.width = (int32_t)fb.width;
-            g_latestInfo.height = (int32_t)fb.height;
-            g_latestInfo.strideBytes = (int32_t)fb.stride;
-            g_latestInfo.bytesPerPixel = (int32_t)fb.bytes_per_pixel;
-            
-            g_latestBytes.resize(fb.size);
-            std::memcpy(g_latestBytes.data(), fb.data, fb.size);
-            
-            g_hasNewFrame.store(true);
+            for (uint8_t i = 0; i < data_ptr->frame_count; i++) {
+                const MLWorldCameraFrame& f = data_ptr->frames[i];
+                const MLWorldCameraFrameBuffer& fb = f.frame_buffer;
+                
+                int idx = CamIdToIndex((uint32_t)f.id);
+                if (idx < 0 || idx >= 3) continue;
+                
+                if (fb.data && fb.size > 0) {
+                    g_frameInfo[idx].camId = (int32_t)f.id;
+                    g_frameInfo[idx].frameType = (int32_t)f.frame_type;
+                    g_frameInfo[idx].timestampNs = (int64_t)f.timestamp;
+                    g_frameInfo[idx].width = (int32_t)fb.width;
+                    g_frameInfo[idx].height = (int32_t)fb.height;
+                    g_frameInfo[idx].strideBytes = (int32_t)fb.stride;
+                    g_frameInfo[idx].bytesPerPixel = (int32_t)fb.bytes_per_pixel;
+                    
+                    g_frameBytes[idx].resize(fb.size);
+                    std::memcpy(g_frameBytes[idx].data(), fb.data, fb.size);
+                    
+                    g_hasNewFrame[idx].store(true);
+                }
+            }
         }
         
         MLWorldCameraReleaseCameraData(g_handle, data_ptr);
@@ -97,47 +123,45 @@ extern "C" bool MLWorldCamUnity_Init(uint32_t identifiers_mask) {
         return true;
     }
     
-    // If all cameras requested (7), try center first for compatibility
+    // Default to all cameras if none specified
     uint32_t cameras = identifiers_mask;
-    if (cameras == CAM_ALL || cameras == 0) {
-        LOGW("All/no cameras requested, trying CENTER only for compatibility");
-        cameras = CAM_CENTER;
+    if (cameras == 0) {
+        cameras = CAM_ALL;
     }
+    
+    g_enabledCameras = cameras;
     
     MLWorldCameraSettings settings;
     MLWorldCameraSettingsInit(&settings);
     
     settings.cameras = cameras;
-    settings.mode = MLWorldCameraMode_NormalExposure;  // Most compatible mode
+    settings.mode = MLWorldCameraMode_NormalExposure;
     
-    LOGI("Connecting: cameras=%u mode=%d", cameras, (int)settings.mode);
+    LOGI("Connecting: cameras=%u (L=%d R=%d C=%d) mode=%d", 
+         cameras,
+         (cameras & CAM_LEFT) ? 1 : 0,
+         (cameras & CAM_RIGHT) ? 1 : 0,
+         (cameras & CAM_CENTER) ? 1 : 0,
+         (int)settings.mode);
     
     MLResult r = MLWorldCameraConnect(&settings, &g_handle);
     
     if (r != MLResult_Ok || g_handle == ML_INVALID_HANDLE) {
         LOGE("MLWorldCameraConnect FAILED: r=%d", (int)r);
-        
-        // If center failed, try left
-        if (cameras == CAM_CENTER) {
-            LOGW("Center camera failed, trying LEFT...");
-            settings.cameras = CAM_LEFT;
-            r = MLWorldCameraConnect(&settings, &g_handle);
-            
-            if (r != MLResult_Ok || g_handle == ML_INVALID_HANDLE) {
-                LOGE("LEFT camera also failed r=%d", (int)r);
-                LOGE("Check: android.permission.CAMERA in manifest");
-                LOGE("Check: No other app using world cameras");
-                g_handle = ML_INVALID_HANDLE;
-                return false;
-            }
-            LOGI("Connected to LEFT camera instead");
-        } else {
-            g_handle = ML_INVALID_HANDLE;
-            return false;
-        }
+        LOGE("Check: android.permission.CAMERA in manifest");
+        LOGE("Check: No other app using world cameras");
+        g_handle = ML_INVALID_HANDLE;
+        return false;
     }
     
     LOGI("MLWorldCameraConnect OK: handle=%llu", (unsigned long long)g_handle);
+    
+    // Clear all frame buffers
+    for (int i = 0; i < 3; i++) {
+        g_frameBytes[i].clear();
+        g_hasNewFrame[i].store(false);
+        std::memset(&g_frameInfo[i], 0, sizeof(WorldCamFrameInfo));
+    }
     
     g_initialized.store(true);
     g_running.store(true);
@@ -147,15 +171,14 @@ extern "C" bool MLWorldCamUnity_Init(uint32_t identifiers_mask) {
     return true;
 }
 
+// Get frame from specific camera (camId = 1=LEFT, 2=RIGHT, 4=CENTER)
 extern "C" bool MLWorldCamUnity_TryGetLatest(
-    uint32_t timeout_ms,
+    uint32_t camId,
     WorldCamFrameInfo* out_info,
     uint8_t* out_bytes,
     int32_t capacity_bytes,
     int32_t* out_bytes_written)
 {
-    (void)timeout_ms;
-    
     if (!out_info || !out_bytes || capacity_bytes <= 0 || !out_bytes_written) {
         if (out_bytes_written) *out_bytes_written = 0;
         return false;
@@ -167,29 +190,51 @@ extern "C" bool MLWorldCamUnity_TryGetLatest(
         return false;
     }
     
-    if (!g_hasNewFrame.load()) {
+    // Convert camId to index
+    int idx = CamIdToIndex(camId);
+    if (idx < 0 || idx >= 3) {
+        return false;
+    }
+    
+    if (!g_hasNewFrame[idx].load()) {
         return false;
     }
     
     std::lock_guard<std::mutex> lock(g_mutex);
     
-    if (g_latestBytes.empty()) {
+    if (g_frameBytes[idx].empty()) {
         return false;
     }
     
-    int32_t required = (int32_t)g_latestBytes.size();
+    int32_t required = (int32_t)g_frameBytes[idx].size();
     if (required > capacity_bytes) {
         *out_bytes_written = required;
         return false;
     }
     
-    *out_info = g_latestInfo;
-    std::memcpy(out_bytes, g_latestBytes.data(), required);
+    *out_info = g_frameInfo[idx];
+    std::memcpy(out_bytes, g_frameBytes[idx].data(), required);
     *out_bytes_written = required;
     
-    g_hasNewFrame.store(false);
+    g_hasNewFrame[idx].store(false);
     
     return true;
+}
+
+// Get count of cameras with new frames available
+extern "C" int32_t MLWorldCamUnity_GetAvailableCount() {
+    int32_t count = 0;
+    for (int i = 0; i < 3; i++) {
+        if (g_hasNewFrame[i].load()) count++;
+    }
+    return count;
+}
+
+// Check if specific camera has new frame
+extern "C" bool MLWorldCamUnity_HasNewFrame(uint32_t camId) {
+    int idx = CamIdToIndex(camId);
+    if (idx < 0 || idx >= 3) return false;
+    return g_hasNewFrame[idx].load();
 }
 
 extern "C" void MLWorldCamUnity_Shutdown() {
@@ -208,8 +253,12 @@ extern "C" void MLWorldCamUnity_Shutdown() {
         g_handle = ML_INVALID_HANDLE;
     }
     
-    g_latestBytes.clear();
-    g_hasNewFrame.store(false);
+    for (int i = 0; i < 3; i++) {
+        g_frameBytes[i].clear();
+        g_hasNewFrame[i].store(false);
+    }
+    
+    g_enabledCameras = 0;
     g_initialized.store(false);
     
     LOGI("Shutdown complete");

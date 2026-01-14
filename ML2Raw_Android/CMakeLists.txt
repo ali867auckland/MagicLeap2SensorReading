@@ -9,6 +9,9 @@ add_library(mldepth_unity SHARED
   src/mlworldcam.cpp
   src/mldepth.cpp
   src/mlimu.cpp
+  src/mleyetracking.cpp
+  src/mlgazerecognition.cpp
+  src/mlmeshing.cpp
 )
 
 target_include_directories(mldepth_unity PRIVATE

@@ -177,6 +177,54 @@ src/mldepth.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s
 .PHONY : src/mldepth.cpp.s
 
+src/mleyetracking.o: src/mleyetracking.cpp.o
+.PHONY : src/mleyetracking.o
+
+# target to build an object file
+src/mleyetracking.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.o
+.PHONY : src/mleyetracking.cpp.o
+
+src/mleyetracking.i: src/mleyetracking.cpp.i
+.PHONY : src/mleyetracking.i
+
+# target to preprocess a source file
+src/mleyetracking.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.i
+.PHONY : src/mleyetracking.cpp.i
+
+src/mleyetracking.s: src/mleyetracking.cpp.s
+.PHONY : src/mleyetracking.s
+
+# target to generate assembly for a file
+src/mleyetracking.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.s
+.PHONY : src/mleyetracking.cpp.s
+
+src/mlgazerecognition.o: src/mlgazerecognition.cpp.o
+.PHONY : src/mlgazerecognition.o
+
+# target to build an object file
+src/mlgazerecognition.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.o
+.PHONY : src/mlgazerecognition.cpp.o
+
+src/mlgazerecognition.i: src/mlgazerecognition.cpp.i
+.PHONY : src/mlgazerecognition.i
+
+# target to preprocess a source file
+src/mlgazerecognition.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.i
+.PHONY : src/mlgazerecognition.cpp.i
+
+src/mlgazerecognition.s: src/mlgazerecognition.cpp.s
+.PHONY : src/mlgazerecognition.s
+
+# target to generate assembly for a file
+src/mlgazerecognition.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.s
+.PHONY : src/mlgazerecognition.cpp.s
+
 src/mlheadtracking.o: src/mlheadtracking.cpp.o
 .PHONY : src/mlheadtracking.o
 
@@ -224,6 +272,30 @@ src/mlimu.s: src/mlimu.cpp.s
 src/mlimu.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlimu.cpp.s
 .PHONY : src/mlimu.cpp.s
+
+src/mlmeshing.o: src/mlmeshing.cpp.o
+.PHONY : src/mlmeshing.o
+
+# target to build an object file
+src/mlmeshing.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.o
+.PHONY : src/mlmeshing.cpp.o
+
+src/mlmeshing.i: src/mlmeshing.cpp.i
+.PHONY : src/mlmeshing.i
+
+# target to preprocess a source file
+src/mlmeshing.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.i
+.PHONY : src/mlmeshing.cpp.i
+
+src/mlmeshing.s: src/mlmeshing.cpp.s
+.PHONY : src/mlmeshing.s
+
+# target to generate assembly for a file
+src/mlmeshing.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.s
+.PHONY : src/mlmeshing.cpp.s
 
 src/mlperception_service.o: src/mlperception_service.cpp.o
 .PHONY : src/mlperception_service.o
@@ -312,12 +384,21 @@ help:
 	@echo "... src/mldepth.o"
 	@echo "... src/mldepth.i"
 	@echo "... src/mldepth.s"
+	@echo "... src/mleyetracking.o"
+	@echo "... src/mleyetracking.i"
+	@echo "... src/mleyetracking.s"
+	@echo "... src/mlgazerecognition.o"
+	@echo "... src/mlgazerecognition.i"
+	@echo "... src/mlgazerecognition.s"
 	@echo "... src/mlheadtracking.o"
 	@echo "... src/mlheadtracking.i"
 	@echo "... src/mlheadtracking.s"
 	@echo "... src/mlimu.o"
 	@echo "... src/mlimu.i"
 	@echo "... src/mlimu.s"
+	@echo "... src/mlmeshing.o"
+	@echo "... src/mlmeshing.i"
+	@echo "... src/mlmeshing.s"
 	@echo "... src/mlperception_service.o"
 	@echo "... src/mlperception_service.i"
 	@echo "... src/mlperception_service.s"
