@@ -193,73 +193,99 @@ bool MLMeshingUnity_GetBlockInfo(int32_t index, MeshBlockInfo* out_info) {
     return true;
 }
 
+bool MLMeshingUnity_PollMeshResult(void) {
+    std::lock_guard<std::mutex> lock(g_mutex);
+    
+    if (!g_initialized.load() || g_meshDataRequest == ML_INVALID_HANDLE) {
+        return false;
+    }
+    
+    MLMeshingMesh mesh;
+    MLResult r = MLMeshingGetMeshResult(g_meshClient, g_meshDataRequest, &mesh);
+    
+    if (r == MLResult_Pending) {
+        // Still waiting
+        return false;
+    }
+    
+    if (r != MLResult_Ok) {
+        LOGW("MLMeshingGetMeshResult failed r=%d", (int)r);
+        MLMeshingFreeResource(g_meshClient, &g_meshDataRequest);
+        g_meshDataRequest = ML_INVALID_HANDLE;
+        return true; // Request completed (with error)
+    }
+    
+    // Collect all vertices and indices
+    g_vertices.clear();
+    g_indices.clear();
+    g_normals.clear();
+    g_confidence.clear();
+    
+    for (uint32_t i = 0; i < mesh.data_count; i++) {
+        const MLMeshingBlockMesh& block = mesh.data[i];
+        if (block.result != MLMeshingResult_Success) {
+            if (g_debug) {
+                LOGW("Block %u result=%d", i, (int)block.result);
+            }
+            continue;
+        }
+        
+        uint32_t vertexOffset = (uint32_t)(g_vertices.size() / 3);
+        
+        // Add vertices
+        for (uint32_t v = 0; v < block.vertex_count; v++) {
+            g_vertices.push_back(block.vertex[v].x);
+            g_vertices.push_back(block.vertex[v].y);
+            g_vertices.push_back(block.vertex[v].z);
+        }
+        
+        // Add indices (adjusted for vertex offset)
+        for (uint16_t idx = 0; idx < block.index_count; idx++) {
+            g_indices.push_back(block.index[idx] + vertexOffset);
+        }
+        
+        // Add normals if available
+        if (block.normal) {
+            for (uint32_t v = 0; v < block.vertex_count; v++) {
+                g_normals.push_back(block.normal[v].x);
+                g_normals.push_back(block.normal[v].y);
+                g_normals.push_back(block.normal[v].z);
+            }
+        }
+        
+        // Add confidence if available
+        if (block.confidence) {
+            for (uint32_t v = 0; v < block.vertex_count; v++) {
+                g_confidence.push_back(block.confidence[v]);
+            }
+        }
+    }
+    
+    g_meshData = mesh;
+    g_hasMeshData = true;
+    
+    // Free the request
+    MLMeshingFreeResource(g_meshClient, &g_meshDataRequest);
+    g_meshDataRequest = ML_INVALID_HANDLE;
+    
+    if (g_debug) {
+        LOGI("Mesh data ready: %zu vertices, %zu indices (%zu triangles), %zu blocks processed",
+             g_vertices.size() / 3, g_indices.size(), g_indices.size() / 3, (size_t)mesh.data_count);
+    }
+    
+    return true; // Request completed successfully
+}
+
 bool MLMeshingUnity_RequestMesh(const int32_t* block_indices, int32_t count, int32_t lod) {
     std::lock_guard<std::mutex> lock(g_mutex);
     
-    if (!g_initialized.load() || count <= 0 || !block_indices) return false;
+    if (!g_initialized.load() || count <= 0 || !block_indices) {
+        return false;
+    }
     
-    // If we have a pending request, check if it's done
+    // Don't submit if we already have a pending request
     if (g_meshDataRequest != ML_INVALID_HANDLE) {
-        MLMeshingMesh mesh;
-        MLResult r = MLMeshingGetMeshResult(g_meshClient, g_meshDataRequest, &mesh);
-        
-        if (r == MLResult_Ok) {
-            // Collect all vertices and indices
-            g_vertices.clear();
-            g_indices.clear();
-            g_normals.clear();
-            g_confidence.clear();
-            
-            for (uint32_t i = 0; i < mesh.data_count; i++) {
-                const MLMeshingBlockMesh& block = mesh.data[i];
-                if (block.result != MLMeshingResult_Success) continue;
-                
-                uint32_t vertexOffset = (uint32_t)(g_vertices.size() / 3);
-                
-                // Add vertices
-                for (uint32_t v = 0; v < block.vertex_count; v++) {
-                    g_vertices.push_back(block.vertex[v].x);
-                    g_vertices.push_back(block.vertex[v].y);
-                    g_vertices.push_back(block.vertex[v].z);
-                }
-                
-                // Add indices (adjusted for vertex offset)
-                for (uint16_t idx = 0; idx < block.index_count; idx++) {
-                    g_indices.push_back(block.index[idx] + vertexOffset);
-                }
-                
-                // Add normals if available
-                if (block.normal) {
-                    for (uint32_t v = 0; v < block.vertex_count; v++) {
-                        g_normals.push_back(block.normal[v].x);
-                        g_normals.push_back(block.normal[v].y);
-                        g_normals.push_back(block.normal[v].z);
-                    }
-                }
-                
-                // Add confidence if available
-                if (block.confidence) {
-                    for (uint32_t v = 0; v < block.vertex_count; v++) {
-                        g_confidence.push_back(block.confidence[v]);
-                    }
-                }
-            }
-            
-            g_meshData = mesh;
-            g_hasMeshData = true;
-            
-            // Free the request
-            MLMeshingFreeResource(g_meshClient, &g_meshDataRequest);
-            g_meshDataRequest = ML_INVALID_HANDLE;
-            
-            if (g_debug) {
-                LOGI("Mesh data: %zu vertices, %zu indices (%zu triangles)",
-                     g_vertices.size() / 3, g_indices.size(), g_indices.size() / 3);
-            }
-        } else if (r != MLResult_Pending) {
-            MLMeshingFreeResource(g_meshClient, &g_meshDataRequest);
-            g_meshDataRequest = ML_INVALID_HANDLE;
-        }
+        LOGW("Mesh request already pending, wait for it to complete");
         return false;
     }
     
@@ -275,7 +301,10 @@ bool MLMeshingUnity_RequestMesh(const int32_t* block_indices, int32_t count, int
         }
     }
     
-    if (requests.empty()) return false;
+    if (requests.empty()) {
+        LOGW("No valid blocks to request");
+        return false;
+    }
     
     MLMeshingMeshRequest meshRequest;
     meshRequest.request_count = (int)requests.size();
@@ -285,6 +314,10 @@ bool MLMeshingUnity_RequestMesh(const int32_t* block_indices, int32_t count, int
     if (r != MLResult_Ok) {
         LOGW("MLMeshingRequestMesh failed r=%d", (int)r);
         return false;
+    }
+    
+    if (g_debug) {
+        LOGI("Mesh request submitted: %zu blocks, LOD=%d", requests.size(), lod);
     }
     
     return true;

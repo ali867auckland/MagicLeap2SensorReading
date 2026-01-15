@@ -32,10 +32,13 @@ public class MeshingNativeConsumer : MonoBehaviour
     [SerializeField] private int levelOfDetail = 1;
 
     [Tooltip("Query region extent (meters)")]
-    [SerializeField] private float queryExtent = 5f;
+    [SerializeField] private float queryExtent = 10f;
 
     [Tooltip("Update interval (seconds)")]
     [SerializeField] private float updateInterval = 1f;
+
+    [Tooltip("Max blocks to request per update (to avoid timeouts)")]
+    [SerializeField] private int maxBlocksPerRequest = 20;
 
     [Tooltip("Max hole perimeter to fill (meters, 0-5)")]
     [SerializeField] private float fillHoleLength = 0.5f;
@@ -138,17 +141,39 @@ public class MeshingNativeConsumer : MonoBehaviour
     {
         if (!started || !isRunning || bw == null) return;
 
-        // Update query region to follow camera
-        Vector3 camPos = Camera.main != null ? Camera.main.transform.position : Vector3.zero;
+        // Update query region to follow head position
+        Vector3 headPos = Vector3.zero;
+        
+        // Try our native head tracking first
+        MLHeadTrackingNative.HeadPoseData pose;
+        if (MLHeadTrackingNative.MLHeadTrackingUnity_GetPose(out pose) && pose.resultCode == 0)
+        {
+            headPos = new Vector3(pose.position_x, pose.position_y, pose.position_z);
+        }
+        else if (Camera.main != null)
+        {
+            // Fallback to Camera.main
+            headPos = Camera.main.transform.position;
+        }
+        
         MLMeshingNative.MLMeshingUnity_SetQueryRegion(
-            camPos.x, camPos.y, camPos.z,
+            headPos.x, headPos.y, headPos.z,
             queryExtent, queryExtent, queryExtent);
+        
+        if (debugMode && updateIndex == 0 && Time.frameCount % 300 == 0)
+        {
+            Debug.Log($"[MESH] Query region center: ({headPos.x:F2}, {headPos.y:F2}, {headPos.z:F2}) extent={queryExtent}m");
+        }
 
         switch (currentState)
         {
             case State.Idle:
                 if (Time.time - lastUpdateTime >= updateInterval)
                 {
+                    if (debugMode && updateIndex == 0)
+                    {
+                        Debug.Log($"[MESH] Requesting mesh info...");
+                    }
                     MLMeshingNative.MLMeshingUnity_RequestMeshInfo();
                     currentState = State.WaitingForInfo;
                     lastUpdateTime = Time.time;
@@ -180,12 +205,23 @@ public class MeshingNativeConsumer : MonoBehaviour
                                     info.State == MLMeshingNative.MeshBlockState.Updated)
                                 {
                                     blockIndices.Add(i);
+                                    
+                                    // Limit blocks per request to avoid timeouts
+                                    if (blockIndices.Count >= maxBlocksPerRequest)
+                                    {
+                                        break;
+                                    }
                                 }
                             }
                         }
 
                         if (blockIndices.Count > 0)
                         {
+                            if (debugMode && blockIndices.Count < summary.newBlocks + summary.updatedBlocks)
+                            {
+                                Debug.Log($"[MESH] Requesting {blockIndices.Count} of {summary.newBlocks + summary.updatedBlocks} blocks (limited to {maxBlocksPerRequest})");
+                            }
+                            
                             MLMeshingNative.MLMeshingUnity_RequestMesh(
                                 blockIndices.ToArray(), blockIndices.Count, levelOfDetail);
                             currentState = State.WaitingForMesh;
@@ -209,37 +245,50 @@ public class MeshingNativeConsumer : MonoBehaviour
                 break;
 
             case State.WaitingForMesh:
-                int vertexCount, indexCount;
-                if (MLMeshingNative.MLMeshingUnity_IsMeshReady(out vertexCount, out indexCount))
+                // Poll for mesh result
+                if (MLMeshingNative.MLMeshingUnity_PollMeshResult())
                 {
-                    if (vertexCount * 3 <= vertexBuffer.Length && indexCount <= indexBuffer.Length)
+                    // Result is ready (either success or failure)
+                    int vertexCount, indexCount;
+                    if (MLMeshingNative.MLMeshingUnity_IsMeshReady(out vertexCount, out indexCount))
                     {
-                        bool ok = MLMeshingNative.MLMeshingUnity_GetMeshData(
-                            vertexBuffer, vertexBuffer.Length,
-                            indexBuffer, indexBuffer.Length,
-                            normalBuffer,
-                            confidenceBuffer);
-
-                        if (ok)
+                        if (vertexCount * 3 <= vertexBuffer.Length && indexCount <= indexBuffer.Length)
                         {
-                            updateIndex++;
-                            totalVertices = vertexCount;
-                            totalTriangles = indexCount / 3;
+                            bool ok = MLMeshingNative.MLMeshingUnity_GetMeshData(
+                                vertexBuffer, vertexBuffer.Length,
+                                indexBuffer, indexBuffer.Length,
+                                normalBuffer,
+                                confidenceBuffer);
 
-                            WriteMeshUpdate(vertexCount, indexCount);
-
-                            if (debugMode)
+                            if (ok)
                             {
-                                Debug.Log($"[MESH] update={updateIndex} vertices={vertexCount} " +
-                                          $"triangles={indexCount / 3}");
+                                updateIndex++;
+                                totalVertices = vertexCount;
+                                totalTriangles = indexCount / 3;
+
+                                WriteMeshUpdate(vertexCount, indexCount);
+
+                                if (debugMode)
+                                {
+                                    Debug.Log($"[MESH] update={updateIndex} vertices={vertexCount} " +
+                                              $"triangles={indexCount / 3}");
+                                }
                             }
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"[MESH] Buffer overflow: need {vertexCount * 3} verts, {indexCount} indices");
                         }
                     }
                     else
                     {
-                        Debug.LogWarning($"[MESH] Buffer overflow: need {vertexCount * 3} verts, {indexCount} indices");
+                        // Request completed but no mesh data (blocks may have failed)
+                        if (debugMode)
+                        {
+                            Debug.LogWarning("[MESH] Mesh request completed but no valid data returned");
+                        }
                     }
-
+                    
                     currentState = State.Idle;
                 }
                 // Timeout after 10 seconds

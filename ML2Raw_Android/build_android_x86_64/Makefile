@@ -177,6 +177,30 @@ src/mldepth.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.s
 .PHONY : src/mldepth.cpp.s
 
+src/mleyecamera.o: src/mleyecamera.cpp.o
+.PHONY : src/mleyecamera.o
+
+# target to build an object file
+src/mleyecamera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.o
+.PHONY : src/mleyecamera.cpp.o
+
+src/mleyecamera.i: src/mleyecamera.cpp.i
+.PHONY : src/mleyecamera.i
+
+# target to preprocess a source file
+src/mleyecamera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.i
+.PHONY : src/mleyecamera.cpp.i
+
+src/mleyecamera.s: src/mleyecamera.cpp.s
+.PHONY : src/mleyecamera.s
+
+# target to generate assembly for a file
+src/mleyecamera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.s
+.PHONY : src/mleyecamera.cpp.s
+
 src/mleyetracking.o: src/mleyetracking.cpp.o
 .PHONY : src/mleyetracking.o
 
@@ -345,6 +369,54 @@ src/mlrgbcamera.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.s
 .PHONY : src/mlrgbcamera.cpp.s
 
+src/mlspace.o: src/mlspace.cpp.o
+.PHONY : src/mlspace.o
+
+# target to build an object file
+src/mlspace.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.o
+.PHONY : src/mlspace.cpp.o
+
+src/mlspace.i: src/mlspace.cpp.i
+.PHONY : src/mlspace.i
+
+# target to preprocess a source file
+src/mlspace.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.i
+.PHONY : src/mlspace.cpp.i
+
+src/mlspace.s: src/mlspace.cpp.s
+.PHONY : src/mlspace.s
+
+# target to generate assembly for a file
+src/mlspace.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.s
+.PHONY : src/mlspace.cpp.s
+
+src/mlspatialanchor.o: src/mlspatialanchor.cpp.o
+.PHONY : src/mlspatialanchor.o
+
+# target to build an object file
+src/mlspatialanchor.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.o
+.PHONY : src/mlspatialanchor.cpp.o
+
+src/mlspatialanchor.i: src/mlspatialanchor.cpp.i
+.PHONY : src/mlspatialanchor.i
+
+# target to preprocess a source file
+src/mlspatialanchor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.i
+.PHONY : src/mlspatialanchor.cpp.i
+
+src/mlspatialanchor.s: src/mlspatialanchor.cpp.s
+.PHONY : src/mlspatialanchor.s
+
+# target to generate assembly for a file
+src/mlspatialanchor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mldepth_unity.dir/build.make CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.s
+.PHONY : src/mlspatialanchor.cpp.s
+
 src/mlworldcam.o: src/mlworldcam.cpp.o
 .PHONY : src/mlworldcam.o
 
@@ -384,6 +456,9 @@ help:
 	@echo "... src/mldepth.o"
 	@echo "... src/mldepth.i"
 	@echo "... src/mldepth.s"
+	@echo "... src/mleyecamera.o"
+	@echo "... src/mleyecamera.i"
+	@echo "... src/mleyecamera.s"
 	@echo "... src/mleyetracking.o"
 	@echo "... src/mleyetracking.i"
 	@echo "... src/mleyetracking.s"
@@ -405,6 +480,12 @@ help:
 	@echo "... src/mlrgbcamera.o"
 	@echo "... src/mlrgbcamera.i"
 	@echo "... src/mlrgbcamera.s"
+	@echo "... src/mlspace.o"
+	@echo "... src/mlspace.i"
+	@echo "... src/mlspace.s"
+	@echo "... src/mlspatialanchor.o"
+	@echo "... src/mlspatialanchor.i"
+	@echo "... src/mlspatialanchor.s"
 	@echo "... src/mlworldcam.o"
 	@echo "... src/mlworldcam.i"
 	@echo "... src/mlworldcam.s"

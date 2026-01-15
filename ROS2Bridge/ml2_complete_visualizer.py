@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """
 ML2 Visualizer - For Rerun v0.28.2 + Python 3.14
-Simplified API that actually works
+
+Features:
+- Works with rerun 0.28+ timing API
+- Supports grayscale & RGB & RGBA/BGRA RGB frames (auto-detect)
+- Draws visible axes + points for headpose & cvpose
+- Safe scalar logging (no NaN/Inf crashes)
+- Fixes WorldCam negative size crash (treat size as unsigned + sanity checks)
+- Logs worldcam per camera_id so streams don't overwrite each other
 """
 
 import struct
@@ -9,9 +16,13 @@ import numpy as np
 import rerun as rr
 from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import Optional
 import argparse
 
+
+# ============================================================
+# Data Classes
+# ============================================================
 
 @dataclass
 class IMUSample:
@@ -48,6 +59,8 @@ class RGBFrameSample:
     timestamp_ns: int
     width: int
     height: int
+    stride: int
+    format_val: int
     has_valid_pose: bool
     rotation: np.ndarray
     position: np.ndarray
@@ -73,537 +86,404 @@ class WorldCamSample:
     image_data: bytes
 
 
-def parse_imu_file(filepath: Path) -> Tuple[int, List[IMUSample]]:
-    """Parse IMU binary file."""
+# ============================================================
+# Rerun Helpers
+# ============================================================
+
+def rr_set_time_ns(ns: int, frame: Optional[int] = None):
+    rr.set_time("device_time", duration=float(ns) * 1e-9)
+    if frame is not None:
+        rr.set_time("frame", sequence=int(frame))
+
+
+def log_axes(entity_path: str, axis_len: float = 0.15):
+    rr.log(
+        entity_path,
+        rr.Arrows3D(
+            origins=[[0, 0, 0]] * 3,
+            vectors=[
+                [axis_len, 0, 0],
+                [0, axis_len, 0],
+                [0, 0, axis_len],
+            ],
+        ),
+    )
+
+
+# ============================================================
+# Parsers
+# ============================================================
+
+def parse_imu_file(filepath: Path):
     samples = []
-    
-    with open(filepath, 'rb') as f:
-        header = f.read(8)
-        if header != b'IMURAW\x00\x00':
-            raise ValueError(f"Invalid IMU header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        sample_rate_hz = struct.unpack('i', f.read(4))[0]
-        print(f"[IMU] version={version}, rate={sample_rate_hz}Hz")
-        
-        sample_size = 54
-        
+    with open(filepath, "rb") as f:
+        f.read(8)
+        version = struct.unpack("<i", f.read(4))[0]
+        rate = struct.unpack("<i", f.read(4))[0]
+        print(f"[IMU] version={version}, rate={rate}Hz")
+
         while True:
-            data = f.read(sample_size)
-            if len(data) < sample_size:
+            data = f.read(54)
+            if len(data) < 54:
                 break
-            
-            offset = 0
-            frame_index = struct.unpack('I', data[offset:offset+4])[0]
-            offset += 4
-            
-            accel_x, accel_y, accel_z = struct.unpack('fff', data[offset:offset+12])
-            offset += 12
-            accel_ts = struct.unpack('q', data[offset:offset+8])[0]
-            offset += 8
-            has_accel = struct.unpack('?', data[offset:offset+1])[0]
-            offset += 1
-            
-            gyro_x, gyro_y, gyro_z = struct.unpack('fff', data[offset:offset+12])
-            offset += 12
-            gyro_ts = struct.unpack('q', data[offset:offset+8])[0]
-            offset += 8
-            has_gyro = struct.unpack('?', data[offset:offset+1])[0]
-            
-            samples.append(IMUSample(
-                frame_index=frame_index,
-                accel=np.array([accel_x, accel_y, accel_z]),
-                accel_timestamp_ns=accel_ts,
-                has_accel=has_accel,
-                gyro=np.array([gyro_x, gyro_y, gyro_z]),
-                gyro_timestamp_ns=gyro_ts,
-                has_gyro=has_gyro
-            ))
-    
+
+            off = 0
+            frame = struct.unpack_from("<I", data, off)[0]; off += 4
+            ax, ay, az = struct.unpack_from("<fff", data, off); off += 12
+            ats = struct.unpack_from("<q", data, off)[0]; off += 8
+            has_acc = struct.unpack_from("<?", data, off)[0]; off += 1
+            gx, gy, gz = struct.unpack_from("<fff", data, off); off += 12
+            gts = struct.unpack_from("<q", data, off)[0]; off += 8
+            has_gyro = struct.unpack_from("<?", data, off)[0]
+
+            samples.append(
+                IMUSample(
+                    frame_index=int(frame),
+                    accel=np.array([ax, ay, az], dtype=np.float32),
+                    accel_timestamp_ns=int(ats),
+                    has_accel=bool(has_acc),
+                    gyro=np.array([gx, gy, gz], dtype=np.float32),
+                    gyro_timestamp_ns=int(gts),
+                    has_gyro=bool(has_gyro),
+                )
+            )
+
     print(f"[IMU] Loaded {len(samples)} samples")
-    return sample_rate_hz, samples
+    return rate, samples
 
 
-def parse_headpose_file(filepath: Path) -> List[HeadPoseSample]:
-    """Parse head pose binary file."""
+def parse_headpose_file(filepath: Path):
     samples = []
-    
-    with open(filepath, 'rb') as f:
-        header = f.read(8)
-        if header != b'HEADPOSE':
-            raise ValueError(f"Invalid head pose header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        print(f"[HeadPose] version={version}")
-        
-        sample_size = 77
-        
+    with open(filepath, "rb") as f:
+        f.read(12)
         while True:
-            data = f.read(sample_size)
-            if len(data) < sample_size:
+            data = f.read(77)
+            if len(data) < 77:
                 break
-            
-            offset = 0
-            frame_index = struct.unpack('I', data[offset:offset+4])[0]
-            offset += 8
-            timestamp_ns = struct.unpack('q', data[offset:offset+8])[0]
-            offset += 12
-            
-            rot_x, rot_y, rot_z, rot_w = struct.unpack('ffff', data[offset:offset+16])
-            offset += 16
-            pos_x, pos_y, pos_z = struct.unpack('fff', data[offset:offset+12])
-            offset += 16
-            confidence = struct.unpack('f', data[offset:offset+4])[0]
-            
-            samples.append(HeadPoseSample(
-                frame_index=frame_index,
-                timestamp_ns=timestamp_ns,
-                rotation=np.array([rot_x, rot_y, rot_z, rot_w]),
-                position=np.array([pos_x, pos_y, pos_z]),
-                confidence=confidence
-            ))
-    
+            off = 0
+            frame = struct.unpack_from("<I", data, off)[0]; off += 8
+            ts = struct.unpack_from("<q", data, off)[0]; off += 12
+            rx, ry, rz, rw = struct.unpack_from("<ffff", data, off); off += 16
+            px, py, pz = struct.unpack_from("<fff", data, off); off += 16
+            conf = struct.unpack_from("<f", data, off)[0]
+
+            samples.append(
+                HeadPoseSample(
+                    frame_index=int(frame),
+                    timestamp_ns=int(ts),
+                    rotation=np.array([rx, ry, rz, rw], dtype=np.float32),
+                    position=np.array([px, py, pz], dtype=np.float32),
+                    confidence=float(conf),
+                )
+            )
     print(f"[HeadPose] Loaded {len(samples)} samples")
     return samples
 
 
-def parse_cvpose_file(filepath: Path) -> List[CVPoseSample]:
-    """Parse CV camera pose binary file."""
+def parse_cvpose_file(filepath: Path):
     samples = []
-    
-    with open(filepath, 'rb') as f:
-        header = f.read(8)
-        if header != b'CVPOSE\x00\x00':
-            raise ValueError(f"Invalid CV pose header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        print(f"[CVPose] version={version}")
-        
-        sample_size = 56
-        
+    with open(filepath, "rb") as f:
+        f.read(12)
         while True:
-            data = f.read(sample_size)
-            if len(data) < sample_size:
+            data = f.read(56)
+            if len(data) < 56:
                 break
-            
-            offset = 0
-            record_index = struct.unpack('I', data[offset:offset+4])[0]
-            offset += 12
-            timestamp_ns = struct.unpack('q', data[offset:offset+8])[0]
-            offset += 8
-            result_code = struct.unpack('i', data[offset:offset+4])[0]
-            offset += 4
-            
-            rot_x, rot_y, rot_z, rot_w = struct.unpack('ffff', data[offset:offset+16])
-            offset += 16
-            pos_x, pos_y, pos_z = struct.unpack('fff', data[offset:offset+12])
-            
-            samples.append(CVPoseSample(
-                record_index=record_index,
-                timestamp_ns=timestamp_ns,
-                result_code=result_code,
-                rotation=np.array([rot_x, rot_y, rot_z, rot_w]),
-                position=np.array([pos_x, pos_y, pos_z])
-            ))
-    
+            off = 0
+            idx = struct.unpack_from("<I", data, off)[0]; off += 12
+            ts = struct.unpack_from("<q", data, off)[0]; off += 8
+            res = struct.unpack_from("<i", data, off)[0]; off += 4
+            rx, ry, rz, rw = struct.unpack_from("<ffff", data, off); off += 16
+            px, py, pz = struct.unpack_from("<fff", data, off)
+
+            samples.append(
+                CVPoseSample(
+                    record_index=int(idx),
+                    timestamp_ns=int(ts),
+                    result_code=int(res),
+                    rotation=np.array([rx, ry, rz, rw], dtype=np.float32),
+                    position=np.array([px, py, pz], dtype=np.float32),
+                )
+            )
     print(f"[CVPose] Loaded {len(samples)} samples")
     return samples
 
 
-def parse_rgbpose_file(filepath: Path, max_frames: int = 100) -> List[RGBFrameSample]:
-    """Parse RGB camera with pose binary file."""
+def parse_rgbpose_file(filepath: Path, max_frames=100):
     samples = []
-    
-    with open(filepath, 'rb') as f:
-        header = f.read(8)
-        if header != b'RGBPOSE\x00':
-            raise ValueError(f"Invalid RGB pose header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        capture_mode = struct.unpack('i', f.read(4))[0]
-        print(f"[RGBPose] version={version}, mode={capture_mode}")
-        
-        frame_count = 0
-        
-        while frame_count < max_frames:
-            try:
-                frame_idx = struct.unpack('I', f.read(4))[0]
-            except struct.error:
+    with open(filepath, "rb") as f:
+        f.read(16)
+        for _ in range(max_frames):
+            raw = f.read(4)
+            if len(raw) < 4:
                 break
-            
-            unity_time = struct.unpack('f', f.read(4))[0]
-            timestamp_ns = struct.unpack('q', f.read(8))[0]
-            width = struct.unpack('i', f.read(4))[0]
-            height = struct.unpack('i', f.read(4))[0]
-            stride = struct.unpack('i', f.read(4))[0]
-            format_val = struct.unpack('i', f.read(4))[0]
-            
-            pose_valid = struct.unpack('B', f.read(1))[0]
-            pose_result = struct.unpack('i', f.read(4))[0]
-            
-            rot_x, rot_y, rot_z, rot_w = struct.unpack('ffff', f.read(16))
-            pos_x, pos_y, pos_z = struct.unpack('fff', f.read(12))
-            
-            bytes_written = struct.unpack('i', f.read(4))[0]
-            image_data = f.read(bytes_written)
-            
-            samples.append(RGBFrameSample(
-                frame_index=frame_idx,
-                timestamp_ns=timestamp_ns,
-                width=width,
-                height=height,
-                has_valid_pose=(pose_valid != 0),
-                rotation=np.array([rot_x, rot_y, rot_z, rot_w]),
-                position=np.array([pos_x, pos_y, pos_z]),
-                image_data=image_data
-            ))
-            
-            frame_count += 1
-    
-    print(f"[RGBPose] Loaded {len(samples)} frames (max={max_frames})")
+            idx = struct.unpack("<I", raw)[0]
+            f.read(4)  # unity_time
+            ts = struct.unpack("<q", f.read(8))[0]
+            w = struct.unpack("<i", f.read(4))[0]
+            h = struct.unpack("<i", f.read(4))[0]
+            stride = struct.unpack("<i", f.read(4))[0]
+            fmt = struct.unpack("<i", f.read(4))[0]
+            valid = struct.unpack("<B", f.read(1))[0]
+            f.read(4)  # pose_result
+            rx, ry, rz, rw = struct.unpack("<ffff", f.read(16))
+            px, py, pz = struct.unpack("<fff", f.read(12))
+            size = struct.unpack("<i", f.read(4))[0]
+            img = f.read(size) if size > 0 else b""
+
+            samples.append(
+                RGBFrameSample(
+                    frame_index=int(idx),
+                    timestamp_ns=int(ts),
+                    width=int(w),
+                    height=int(h),
+                    stride=int(stride),
+                    format_val=int(fmt),
+                    has_valid_pose=(valid != 0),
+                    rotation=np.array([rx, ry, rz, rw], dtype=np.float32),
+                    position=np.array([px, py, pz], dtype=np.float32),
+                    image_data=img,
+                )
+            )
+    print(f"[RGBPose] Loaded {len(samples)} frames")
     return samples
 
 
-def parse_depth_file(filepath: Path, max_frames: int = 50) -> List[DepthFrameSample]:
-    """Parse depth camera binary file."""
+def parse_depth_file(filepath: Path, max_frames=50):
     samples = []
-    
-    with open(filepath, 'rb') as f:
-        header = f.read(8)
-        if header != b'DEPTHRAW':
-            raise ValueError(f"Invalid depth header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        print(f"[Depth] version={version}")
-        
-        frame_count = 0
-        
-        while frame_count < max_frames:
-            try:
-                frame_idx = struct.unpack('I', f.read(4))[0]
-            except struct.error:
+    with open(filepath, "rb") as f:
+        f.read(12)
+        for _ in range(max_frames):
+            raw = f.read(4)
+            if len(raw) < 4:
                 break
-            
-            timestamp_ns = struct.unpack('q', f.read(8))[0]
-            stream_id = struct.unpack('B', f.read(1))[0]
-            width = struct.unpack('i', f.read(4))[0]
-            height = struct.unpack('i', f.read(4))[0]
-            stride = struct.unpack('i', f.read(4))[0]
-            bytes_per_pixel = struct.unpack('i', f.read(4))[0]
-            bytes_written = struct.unpack('i', f.read(4))[0]
-            
-            depth_bytes = f.read(bytes_written)
-            depth_array = np.frombuffer(depth_bytes, dtype=np.float32)
-            depth_array = depth_array.reshape((height, width))
-            
-            samples.append(DepthFrameSample(
-                frame_index=frame_idx,
-                timestamp_ns=timestamp_ns,
-                width=width,
-                height=height,
-                depth_data=depth_array
-            ))
-            
-            frame_count += 1
-    
-    print(f"[Depth] Loaded {len(samples)} frames (max={max_frames})")
+            idx = struct.unpack("<I", raw)[0]
+            ts = struct.unpack("<q", f.read(8))[0]
+            f.read(1)
+            w = struct.unpack("<i", f.read(4))[0]
+            h = struct.unpack("<i", f.read(4))[0]
+            f.read(8)  # stride + bytes_per_pixel (ignored)
+            size = struct.unpack("<i", f.read(4))[0]
+            depth_bytes = f.read(size) if size > 0 else b""
+            if len(depth_bytes) != size:
+                break
+            depth = np.frombuffer(depth_bytes, dtype=np.float32).reshape(h, w)
+            samples.append(DepthFrameSample(int(idx), int(ts), int(w), int(h), depth))
+    print(f"[Depth] Loaded {len(samples)} frames")
     return samples
 
 
-def parse_worldcam_file(filepath: Path, max_frames: int = 50) -> List[WorldCamSample]:
-    """Parse world camera binary file."""
+def parse_worldcam_file(filepath: Path, max_frames=50):
     samples = []
-    
-    with open(filepath, 'rb') as f:
+    with open(filepath, "rb") as f:
         header = f.read(8)
-        if header != b'WORLDCAM':
-            raise ValueError(f"Invalid world cam header")
-        
-        version = struct.unpack('i', f.read(4))[0]
-        identifiers_mask = struct.unpack('I', f.read(4))[0]
+        if header != b"WORLDCAM":
+            raise ValueError(f"Invalid worldcam header: {header!r}")
+
+        version = struct.unpack("<i", f.read(4))[0]
+        identifiers_mask = struct.unpack("<I", f.read(4))[0]
         print(f"[WorldCam] version={version}, mask={identifiers_mask}")
-        
-        frame_count = 0
-        
-        while frame_count < max_frames:
-            try:
-                frame_idx = struct.unpack('I', f.read(4))[0]
-            except struct.error:
+
+        for _ in range(max_frames):
+            raw = f.read(4)
+            if len(raw) < 4:
                 break
-            
-            timestamp_ns = struct.unpack('q', f.read(8))[0]
-            cam_id = struct.unpack('I', f.read(4))[0]
-            frame_type = struct.unpack('I', f.read(4))[0]
-            width = struct.unpack('i', f.read(4))[0]
-            height = struct.unpack('i', f.read(4))[0]
-            stride = struct.unpack('i', f.read(4))[0]
-            bytes_per_pixel = struct.unpack('i', f.read(4))[0]
-            bytes_written = struct.unpack('i', f.read(4))[0]
-            
+
+            frame_idx = struct.unpack("<I", raw)[0]
+            timestamp_ns = struct.unpack("<q", f.read(8))[0]
+
+            cam_id = struct.unpack("<I", f.read(4))[0]
+            frame_type = struct.unpack("<I", f.read(4))[0]
+
+            width = struct.unpack("<i", f.read(4))[0]
+            height = struct.unpack("<i", f.read(4))[0]
+            stride = struct.unpack("<i", f.read(4))[0]
+            bpp = struct.unpack("<i", f.read(4))[0]
+            bytes_written = struct.unpack("<i", f.read(4))[0]
+
+            # sanity checks to avoid going off the rails
+            if width <= 0 or height <= 0 or width > 10000 or height > 10000:
+                print(f"[WorldCam] Bad dimensions w={width}, h={height}. Stopping.")
+                break
+            if bytes_written < 0 or bytes_written > 200_000_000:
+                print(f"[WorldCam] Bad bytes_written={bytes_written}. Stopping.")
+                break
+
             image_data = f.read(bytes_written)
-            
-            samples.append(WorldCamSample(
-                frame_index=frame_idx,
-                timestamp_ns=timestamp_ns,
-                camera_id=cam_id,
-                width=width,
-                height=height,
-                image_data=image_data
-            ))
-            
-            frame_count += 1
-    
+            if len(image_data) < bytes_written:
+                print(f"[WorldCam] Truncated frame: wanted {bytes_written}, got {len(image_data)}. Stopping.")
+                break
+
+            samples.append(
+                WorldCamSample(
+                    frame_index=int(frame_idx),
+                    timestamp_ns=int(timestamp_ns),
+                    camera_id=int(cam_id),
+                    width=int(width),
+                    height=int(height),
+                    image_data=image_data,
+                )
+            )
+
     print(f"[WorldCam] Loaded {len(samples)} frames (max={max_frames})")
     return samples
 
 
-def visualize_in_rerun(
-    imu_data: Optional[Tuple[int, List[IMUSample]]] = None,
-    headpose_data: Optional[List[HeadPoseSample]] = None,
-    cvpose_data: Optional[List[CVPoseSample]] = None,
-    rgb_data: Optional[List[RGBFrameSample]] = None,
-    depth_data: Optional[List[DepthFrameSample]] = None,
-    worldcam_data: Optional[List[WorldCamSample]] = None,
-    output_rrd: str = None
-):
-    """Visualize all sensor data in Rerun v0.28+."""
-    
-    # Simple init for v0.28
-    rr.init("magic_leap_2_complete", spawn=True)
-    
-    print("\n" + "="*60)
-    print("VISUALIZING IN RERUN")
-    print("="*60)
-    
-    # Log IMU data
-    if imu_data:
-        sample_rate_hz, imu_samples = imu_data
-        print(f"Logging IMU data ({len(imu_samples)} samples @ {sample_rate_hz}Hz)...")
-        
-        for i, sample in enumerate(imu_samples):
-            if sample.has_accel:
-                rr.set_time_sequence("device_time", sample.accel_timestamp_ns)
-                rr.log(
-                    "sensors/imu/accelerometer",
-                    rr.Arrows3D(
-                        origins=[[0, 0, 0]],
-                        vectors=[sample.accel.tolist()],
-                        colors=[[255, 0, 0]]
-                    )
-                )
-                rr.log(
-                    "sensors/imu/accel_magnitude",
-                    rr.Scalar(float(np.linalg.norm(sample.accel)))
-                )
-            
-            if sample.has_gyro:
-                rr.set_time_sequence("device_time", sample.gyro_timestamp_ns)
-                rr.log(
-                    "sensors/imu/gyroscope",
-                    rr.Arrows3D(
-                        origins=[[0, 0, 0]],
-                        vectors=[sample.gyro.tolist()],
-                        colors=[[0, 255, 0]]
-                    )
-                )
-                rr.log(
-                    "sensors/imu/gyro_magnitude",
-                    rr.Scalar(float(np.linalg.norm(sample.gyro)))
-                )
-            
-            if i % 1000 == 0:
-                print(f"  {i}/{len(imu_samples)}...")
-    
-    # Log head pose trajectory
-    if headpose_data:
-        print(f"Logging head tracking ({len(headpose_data)} samples)...")
-        head_positions = []
-        
-        for i, sample in enumerate(headpose_data):
-            rr.set_time_sequence("device_time", sample.timestamp_ns)
-            
-            rr.log(
-                "world/head_tracking",
-                rr.Transform3D(
-                    translation=sample.position,
-                    rotation=rr.Quaternion(xyzw=sample.rotation),
-                    from_parent=False
-                )
-            )
-            
-            rr.log(
-                "sensors/head_tracking/confidence",
-                rr.Scalar(sample.confidence)
-            )
-            head_positions.append(sample.position)
-        
-        # Log trajectory
-        if head_positions:
-            step = max(1, len(head_positions) // 1000)
-            rr.set_time_sequence("device_time", headpose_data[-1].timestamp_ns)
-            rr.log(
-                "world/head_trajectory",
-                rr.LineStrips3D([head_positions[::step]], colors=[[0, 255, 255]])
-            )
-    
-    # Log CV camera poses
-    if cvpose_data:
-        print(f"Logging CV camera pose ({len(cvpose_data)} samples)...")
-        cv_positions = []
-        
-        for sample in cvpose_data:
-            if sample.result_code == 0:
-                rr.set_time_sequence("device_time", sample.timestamp_ns)
-                
-                rr.log(
-                    "world/cv_camera",
-                    rr.Transform3D(
-                        translation=sample.position,
-                        rotation=rr.Quaternion(xyzw=sample.rotation),
-                        from_parent=False
-                    )
-                )
-                
-                cv_positions.append(sample.position)
-        
-        if cv_positions:
-            step = max(1, len(cv_positions) // 1000)
-            rr.set_time_sequence("device_time", cvpose_data[-1].timestamp_ns)
-            rr.log(
-                "world/cv_camera_trajectory",
-                rr.LineStrips3D([cv_positions[::step]], colors=[[255, 255, 0]])
-            )
-    
-    # Log RGB frames
-    if rgb_data:
-        print(f"Logging RGB frames ({len(rgb_data)} frames)...")
-        for i, sample in enumerate(rgb_data):
-            rr.set_time_sequence("device_time", sample.timestamp_ns)
-            
-            # Decode image
-            try:
-                from PIL import Image
-                import io
-                img = Image.open(io.BytesIO(sample.image_data))
-                img_array = np.array(img)
-                rr.log("cameras/rgb", rr.Image(img_array))
-            except Exception as e:
-                if i == 0:
-                    print(f"  Warning: Could not decode RGB image: {e}")
-            
-            if sample.has_valid_pose:
-                rr.log(
-                    "world/rgb_camera",
-                    rr.Transform3D(
-                        translation=sample.position,
-                        rotation=rr.Quaternion(xyzw=sample.rotation),
-                        from_parent=False
-                    )
-                )
-    
-    # Log depth frames
-    if depth_data:
-        print(f"Logging depth frames ({len(depth_data)} frames)...")
-        for i, sample in enumerate(depth_data):
-            rr.set_time_sequence("device_time", sample.timestamp_ns)
-            
-            rr.log("cameras/depth", rr.DepthImage(sample.depth_data, meter=1.0))
-            
-            valid_depth = sample.depth_data[(sample.depth_data > 0.01) & (sample.depth_data < 10.0)]
-            if len(valid_depth) > 0:
-                rr.log("sensors/depth/mean", rr.Scalar(float(np.mean(valid_depth))))
-                rr.log("sensors/depth/min", rr.Scalar(float(np.min(valid_depth))))
-                rr.log("sensors/depth/max", rr.Scalar(float(np.max(valid_depth))))
-    
-    # Log world camera frames
-    if worldcam_data:
-        print(f"Logging world camera frames ({len(worldcam_data)} frames)...")
-        for sample in worldcam_data:
-            rr.set_time_sequence("device_time", sample.timestamp_ns)
-            
-            cam_name = {1: "left", 2: "right", 4: "center"}.get(sample.camera_id, f"cam{sample.camera_id}")
-            
-            img_array = np.frombuffer(sample.image_data, dtype=np.uint8)
-            img_array = img_array.reshape((sample.height, sample.width))
-            
-            rr.log(f"cameras/worldcam_{cam_name}", rr.Image(img_array))
-    
-    # Save to .rrd file if requested
-    if output_rrd:
-        rr.save(output_rrd)
-        print(f"\n✓ Saved recording to: {output_rrd}")
-    
-    print("\n" + "="*60)
-    print("✓ VISUALIZATION COMPLETE!")
-    print("="*60)
-    print("Rerun viewer should be open. If not, connect with:")
-    print("  rerun --connect")
 
+
+# ============================================================
+# Visualization
+# ============================================================
+
+def visualize_in_rerun(imu, head, cv, rgb, depth, worldcam):
+    rr.init("magic_leap_2_complete", spawn=True)
+
+    # IMU
+    rate, imu_samples = imu
+    for s in imu_samples:
+        if s.has_accel:
+            rr_set_time_ns(s.accel_timestamp_ns, s.frame_index)
+            rr.log("imu/accel", rr.Arrows3D(origins=[[0, 0, 0]], vectors=[s.accel.tolist()]))
+
+    # Headpose
+    for s in head:
+        rr_set_time_ns(s.timestamp_ns, s.frame_index)
+        rr.log("head", rr.Transform3D(translation=s.position, rotation=rr.Quaternion(xyzw=s.rotation)))
+        log_axes("head/axes")
+        rr.log("head/pos", rr.Points3D([s.position.tolist()], radii=0.02))
+
+    # CV Pose
+    for s in cv:
+        if s.result_code != 0:
+            continue
+        rr_set_time_ns(s.timestamp_ns, s.record_index)
+        rr.log("cv", rr.Transform3D(translation=s.position, rotation=rr.Quaternion(xyzw=s.rotation)))
+        log_axes("cv/axes")
+        rr.log("cv/pos", rr.Points3D([s.position.tolist()], radii=0.02))
+
+    # RGB (AUTO-DETECT grayscale/RGB/RGBA/BGRA + handles your 16-bit fmt=1 case)
+    for i, s in enumerate(rgb):
+        rr_set_time_ns(s.timestamp_ns, s.frame_index)
+
+        raw = np.frombuffer(s.image_data, dtype=np.uint8)
+        w, h = int(s.width), int(s.height)
+
+        if w <= 0 or h <= 0 or raw.size == 0:
+            continue
+
+        # ------------------------------------------------------------
+        # SPECIAL CASE: your rgbpose fmt=1 looks like 16-bit (2 bytes/pixel)
+        # You measured size=1843198 vs need=1280*720*2=1843200 (missing 2 bytes)
+        # We'll pad tiny shortfalls and display as grayscale (u16 -> normalized).
+        # ------------------------------------------------------------
+        need_u16 = w * h * 2
+        if (raw.size == need_u16) or (abs(raw.size - need_u16) <= 16):
+            if raw.size < need_u16:
+                raw = np.concatenate([raw, np.zeros(need_u16 - raw.size, dtype=np.uint8)])
+
+            img16 = np.frombuffer(raw[:need_u16].tobytes(), dtype=np.uint16).reshape((h, w))
+
+            # normalize u16 -> u8 for display
+            mn = int(img16.min())
+            mx = int(img16.max())
+            if mx > mn:
+                img8 = ((img16.astype(np.float32) - mn) / (mx - mn) * 255.0).astype(np.uint8)
+            else:
+                img8 = np.zeros((h, w), dtype=np.uint8)
+
+            rr.log("camera/rgb_u16_as_gray", rr.Image(img8))
+
+            continue
+
+        # ------------------------------------------------------------
+        # Standard packings
+        # ------------------------------------------------------------
+
+        # grayscale u8
+        if raw.size == w * h:
+            img = raw.reshape(h, w)
+            rr.log("camera/rgb", rr.Image(img))
+            continue
+
+        # RGBA/BGRA (assume BGRA -> convert to RGBA)
+        if raw.size >= w * h * 4:
+            rgba = raw[: w * h * 4].reshape(h, w, 4)
+            rgba = rgba[:, :, [2, 1, 0, 3]]  # BGRA -> RGBA
+            rr.log("camera/rgb", rr.Image(rgba))
+            continue
+
+        # RGB
+        if raw.size >= w * h * 3:
+            rgb3 = raw[: w * h * 3].reshape(h, w, 3)
+            rr.log("camera/rgb", rr.Image(rgb3))
+            continue
+
+        # Debug once
+        if i == 0:
+            print(
+                f"[RGB] Unknown packing: bytes={raw.size}, "
+                f"w*h={w*h}, w*h*2={w*h*2}, w*h*3={w*h*3}, w*h*4={w*h*4}, "
+                f"stride={s.stride}, fmt={s.format_val}"
+            )
+
+
+    # Depth
+    for s in depth:
+        rr_set_time_ns(s.timestamp_ns, s.frame_index)
+        rr.log("camera/depth", rr.DepthImage(s.depth_data, meter=1.0))
+
+    # WorldCam (log per camera id so streams don't overwrite)
+    for s in worldcam:
+        rr_set_time_ns(s.timestamp_ns, s.frame_index)
+
+        # Most worldcam frames are grayscale (H*W). If size differs, attempt best-effort.
+        raw = np.frombuffer(s.image_data, dtype=np.uint8)
+
+        cam_name = {1: "left", 2: "right", 4: "center"}.get(int(s.camera_id), f"cam{int(s.camera_id)}")
+        path = f"camera/worldcam/{cam_name}"
+
+        if raw.size == s.width * s.height:
+            img = raw.reshape(s.height, s.width)
+            rr.log(path, rr.Image(img))
+        elif raw.size >= s.width * s.height * 4:
+            img = raw[: s.width * s.height * 4].reshape(s.height, s.width, 4)
+            rr.log(path, rr.Image(img))
+        elif raw.size >= s.width * s.height * 3:
+            img = raw[: s.width * s.height * 3].reshape(s.height, s.width, 3)
+            rr.log(path, rr.Image(img))
+        else:
+            # fallback only if it looks like an integer number of rows
+            if s.width > 0 and raw.size % s.width == 0:
+                rows = raw.size // s.width
+                # guard against nonsense sizes
+                if 1 <= rows <= 10000:
+                    img = raw.reshape(rows, s.width)
+                    rr.log(path, rr.Image(img))
+
+
+    print("✓ Visualization complete")
+    print("Run: rerun --connect if viewer didn't open")
+
+
+# ============================================================
+# Main
+# ============================================================
 
 def main():
-    parser = argparse.ArgumentParser(description='Visualize ML2 data in Rerun v0.28+')
-    parser.add_argument('--data-dir', type=str, help='Directory containing .bin files')
-    parser.add_argument('--imu', type=str, help='Path to imu_raw_*.bin')
-    parser.add_argument('--headpose', type=str, help='Path to headpose_*.bin')
-    parser.add_argument('--cvpose', type=str, help='Path to cvpose_*.bin')
-    parser.add_argument('--rgb', type=str, help='Path to rgbpose_*.bin')
-    parser.add_argument('--depth', type=str, help='Path to depth_raw_*.bin')
-    parser.add_argument('--worldcam', type=str, help='Path to worldcam_raw_*.bin')
-    parser.add_argument('--output', type=str, help='Save to .rrd file')
-    parser.add_argument('--max-rgb-frames', type=int, default=100)
-    parser.add_argument('--max-depth-frames', type=int, default=50)
-    parser.add_argument('--max-worldcam-frames', type=int, default=50)
-    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data-dir", required=True)
     args = parser.parse_args()
-    
-    if args.data_dir:
-        data_dir = Path(args.data_dir)
-        args.imu = args.imu or str(next(data_dir.glob("imu_raw_*.bin"), None))
-        args.headpose = args.headpose or str(next(data_dir.glob("headpose_*.bin"), None))
-        args.cvpose = args.cvpose or str(next(data_dir.glob("cvpose_*.bin"), None))
-        args.rgb = args.rgb or str(next(data_dir.glob("rgbpose_*.bin"), None))
-        args.depth = args.depth or str(next(data_dir.glob("depth_raw_*.bin"), None))
-        args.worldcam = args.worldcam or str(next(data_dir.glob("worldcam_raw_*.bin"), None))
-    
-    print("="*60)
-    print("MAGIC LEAP 2 COMPLETE DATA VISUALIZER")
-    print("="*60)
-    
-    imu_data = None
-    headpose_data = None
-    cvpose_data = None
-    rgb_data = None
-    depth_data = None
-    worldcam_data = None
-    
-    if args.imu and Path(args.imu).exists():
-        imu_data = parse_imu_file(Path(args.imu))
-    
-    if args.headpose and Path(args.headpose).exists():
-        headpose_data = parse_headpose_file(Path(args.headpose))
-    
-    if args.cvpose and Path(args.cvpose).exists():
-        cvpose_data = parse_cvpose_file(Path(args.cvpose))
-    
-    if args.rgb and Path(args.rgb).exists():
-        rgb_data = parse_rgbpose_file(Path(args.rgb), max_frames=args.max_rgb_frames)
-    
-    if args.depth and Path(args.depth).exists():
-        depth_data = parse_depth_file(Path(args.depth), max_frames=args.max_depth_frames)
-    
-    if args.worldcam and Path(args.worldcam).exists():
-        worldcam_data = parse_worldcam_file(Path(args.worldcam), max_frames=args.max_worldcam_frames)
-    
-    visualize_in_rerun(
-        imu_data=imu_data,
-        headpose_data=headpose_data,
-        cvpose_data=cvpose_data,
-        rgb_data=rgb_data,
-        depth_data=depth_data,
-        worldcam_data=worldcam_data,
-        output_rrd=args.output
-    )
+
+    d = Path(args.data_dir)
+
+    imu = parse_imu_file(next(d.glob("imu_raw_*.bin")))
+    head = parse_headpose_file(next(d.glob("headpose_*.bin")))
+    cv = parse_cvpose_file(next(d.glob("cvpose_*.bin")))
+    rgb = parse_rgbpose_file(next(d.glob("rgbpose_*.bin")))
+    depth = parse_depth_file(next(d.glob("depth_raw_*.bin")))
+    worldcam = parse_worldcam_file(next(d.glob("worldcam_raw_*.bin")))
+
+    visualize_in_rerun(imu, head, cv, rgb, depth, worldcam)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -62,6 +62,10 @@ bool MLMeshingUnity_GetBlockInfo(int32_t index, MeshBlockInfo* out_info);
 // lod: 0=Min, 1=Medium, 2=Max
 bool MLMeshingUnity_RequestMesh(const int32_t* block_indices, int32_t count, int32_t lod);
 
+// Poll for mesh result (call this while waiting for mesh data)
+// Returns true if mesh result was processed (success or failure)
+bool MLMeshingUnity_PollMeshResult(void);
+
 // Check if mesh data is ready
 // Returns true if ready, out_vertex_count/out_index_count will be set
 bool MLMeshingUnity_IsMeshReady(int32_t* out_vertex_count, int32_t* out_index_count);

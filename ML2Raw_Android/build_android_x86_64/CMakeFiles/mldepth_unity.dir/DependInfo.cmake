@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlcvcamera.cpp" "CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlcvcamera.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mldepth.cpp" "CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mldepth.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mleyecamera.cpp" "CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mleyetracking.cpp" "CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlgazerecognition.cpp" "CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlheadtracking.cpp" "CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlheadtracking.cpp.o.d"
@@ -17,6 +18,8 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlmeshing.cpp" "CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlperception_service.cpp" "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlperception_service.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlrgbcamera.cpp" "CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlrgbcamera.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlspace.cpp" "CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.o.d"
+  "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlspatialanchor.cpp" "CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.o.d"
   "/Users/azyl/MagicLeap2SensorReading/ML2Raw_Android/src/mlworldcam.cpp" "CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o" "gcc" "CMakeFiles/mldepth_unity.dir/src/mlworldcam.cpp.o.d"
   "" "libmldepth_unity.so" "gcc" "CMakeFiles/mldepth_unity.dir/link.d"
   )

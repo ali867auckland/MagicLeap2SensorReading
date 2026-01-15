@@ -12,6 +12,9 @@ add_library(mldepth_unity SHARED
   src/mleyetracking.cpp
   src/mlgazerecognition.cpp
   src/mlmeshing.cpp
+  src/mlspace.cpp
+  src/mlspatialanchor.cpp
+  src/mleyecamera.cpp
 )
 
 target_include_directories(mldepth_unity PRIVATE
@@ -29,6 +32,8 @@ find_library(android-lib android)
 target_link_libraries(mldepth_unity
   perception.magicleap
   camera.magicleap
+  space.magicleap
+  input.magicleap
   ${log-lib}
   ${android-lib}
 )

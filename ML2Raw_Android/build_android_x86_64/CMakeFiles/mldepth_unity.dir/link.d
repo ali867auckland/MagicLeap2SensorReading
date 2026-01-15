@@ -10,8 +10,13 @@ libmldepth_unity.so: \
  CMakeFiles/mldepth_unity.dir/src/mleyetracking.cpp.o \
  CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.o \
  CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.o \
+ CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.o \
+ CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.o \
+ CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.o \
  /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libperception.magicleap.so \
  /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libcamera.magicleap.so \
+ /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libspace.magicleap.so \
+ /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libinput.magicleap.so \
  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/liblog.so \
  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/libandroid.so \
  /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/21/lib/linux/x86_64/libatomic.a \
@@ -47,9 +52,19 @@ CMakeFiles/mldepth_unity.dir/src/mlgazerecognition.cpp.o:
 
 CMakeFiles/mldepth_unity.dir/src/mlmeshing.cpp.o:
 
+CMakeFiles/mldepth_unity.dir/src/mlspace.cpp.o:
+
+CMakeFiles/mldepth_unity.dir/src/mlspatialanchor.cpp.o:
+
+CMakeFiles/mldepth_unity.dir/src/mleyecamera.cpp.o:
+
 /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libperception.magicleap.so:
 
 /Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libcamera.magicleap.so:
+
+/Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libspace.magicleap.so:
+
+/Users/azyl/MagicLeap/mlsdk/v1.12.0/lib/ml2/libinput.magicleap.so:
 
 /Users/azyl/Library/Android/sdk/ndk/29.0.14206865/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/lib/x86_64-linux-android/29/liblog.so:
 

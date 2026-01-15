@@ -93,6 +93,10 @@ public static class MLMeshingNative
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
     [return: MarshalAs(UnmanagedType.I1)]
+    public static extern bool MLMeshingUnity_PollMeshResult();
+
+    [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
+    [return: MarshalAs(UnmanagedType.I1)]
     public static extern bool MLMeshingUnity_IsMeshReady(out int out_vertex_count, out int out_index_count);
 
     [DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]
